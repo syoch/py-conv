@@ -17,9 +17,13 @@ def sent_import(sentence:ast.Import,f=""):
     return tmp
 
 def sent_funcdef(sentence:ast.FunctionDef,f=""):
-    return f+"Any "+sentence.name+"("+util.conv(sentence.args)+")"+"\n"+util.walk_shallow(sentence.body,f+"  ")
+    return f+"Any "+sentence.name+"("+util.conv(sentence.args)+")"+"{\n"+util.walk_shallow(sentence.body,f+"  ")+"}"
+
+def sent_ret(sentence:ast.Return,f=""):
+    return f+"Return "+util.conv(sentence.value)+";\n"
 
 table={
     "Import":sent_import,
-    "FunctionDef":sent_funcdef
+    "FunctionDef":sent_funcdef,
+    "Return":sent_ret
 }
