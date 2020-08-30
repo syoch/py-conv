@@ -40,12 +40,18 @@ def expr_name(val:ast.Name):
     return util.conv(val.id)
 
 def expr_call(val:ast.Call):
-    tmp=util.conv(val.func)
+    def conv(val):
+        a=val.__class__.__name__
+        if a=="Call":
+            return expr_call(val)
+        else:
+            return util.conv(val)
+    tmp=conv(val.func)
     tmp+="("
-    tmp+=", ".join([util.conv(arg) for arg in val.args])
+    tmp+=", ".join([conv(arg) for arg in val.args])
     if len(val.keywords)!=0:
         tmp+=", "
-        tmp+=", ".join([keyword.arg+"="+util.conv(keyword.value) for keyword in val.keywords])
+        tmp+=", ".join([keyword.arg+"="+conv(keyword.value) for keyword in val.keywords])
     tmp+=")"
     return tmp
 
@@ -57,5 +63,4 @@ table={
     "Name":expr_name,
     "Constant":lambda a:util.conv(a.value),
     "Expr":lambda a:util.conv(a.value),
-    "Call":expr_call
 }

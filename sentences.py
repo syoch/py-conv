@@ -1,6 +1,7 @@
 #Defines analyze of ast sentence functions
 
 import ast
+from exprs import expr_call
 import os
 import util
 import datamgr
@@ -39,5 +40,6 @@ table={
     "Import":sent_import,
     "FunctionDef":sent_funcdef,
     "Return":sent_ret,
-    "Assign":sent_assign
+    "Assign":sent_assign,
+    "Call":lambda val:expr_call(val)+";\n"
 }
