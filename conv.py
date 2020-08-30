@@ -29,7 +29,7 @@ def conv(filename:str,dest:str):
     datamgr.push("srcs",filename)
 
     for sentence in src.body:
-        print(util.conv(sentence),end="")
+        print(util.conv(sentence,util.modes.SENT),end="")
 
 # +-----------------------+
 # |          Test         |
