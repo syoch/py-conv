@@ -4,7 +4,6 @@ import ast
 import util
 
 
-
 def expr_alias(val:ast.alias):
     alias=util.conv(val.name)
     if val.asname!=None:
@@ -40,6 +39,16 @@ def expr_attr(val:ast.Attribute):
 def expr_name(val:ast.Name):
     return util.conv(val.id)
 
+def expr_call(val:ast.Call):
+    tmp=util.conv(val.func)
+    tmp+="("
+    tmp+=", ".join([util.conv(arg) for arg in val.args])
+    if len(val.keywords)!=0:
+        tmp+=", "
+        tmp+=", ".join([keyword.arg+"="+util.conv(keyword.value) for keyword in val.keywords])
+    tmp+=")"
+    return tmp
+
 table={
     "alias":expr_alias,
     "arguments":expr_args,
@@ -47,4 +56,6 @@ table={
     "Attribute":expr_attr,
     "Name":expr_name,
     "Constant":lambda a:util.conv(a.value),
+    "Expr":lambda a:util.conv(a.value),
+    "Call":expr_call
 }
