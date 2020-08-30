@@ -1,2 +1,2 @@
 # py-compile
-Python source code to c++ source code
+The compiler which converts Python source codes into C++ ones.
