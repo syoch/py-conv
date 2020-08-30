@@ -34,10 +34,10 @@ def expr_args(val:ast.arguments):
     )
 
 def expr_attr(val:ast.Attribute):
-    return util.conv(val.value)+"."+util.conv(val.attr)
+    return util.conv(val.value)+"."+val.attr
 
 def expr_name(val:ast.Name):
-    return util.conv(val.id)
+    return val.id
 
 def expr_call(val:ast.Call):
     def conv(val):
@@ -63,4 +63,5 @@ table={
     "Name":expr_name,
     "Constant":lambda a:util.conv(a.value),
     "Expr":lambda a:util.conv(a.value),
+    "Call":expr_call
 }
