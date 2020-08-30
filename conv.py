@@ -1,5 +1,6 @@
 import ast
 import util
+import datamgr
 
 def eval_sentence(sentence:ast.stmt):
     print(util.conv(sentence),end="")
@@ -22,6 +23,7 @@ def conv(filename:str,dest:str):
     fp.close()
 
     src=ast.parse(data,filename)
+    datamgr.push("srcs",filename)
 
     for sentence in src.body:
         eval_sentence(sentence)
