@@ -26,20 +26,27 @@ def sent_funcdef(sentence:ast.FunctionDef,f=""):
 def sent_ret(sentence:ast.Return,f=""):
     return f+"Return "+util.conv(sentence.value)+";\n"
 
-def sent_assign(sentence:ast.Assign):
+def sent_assign(sentence:ast.Assign,f=""):
     ret=""
     tmp=sentence.targets
     tmp=[util.conv(target) for target in tmp]
     tmp=", ".join(tmp)
     ret+=tmp
     ret+=" = "
-    ret+=util.conv(sentence.value)
-    return ret+";\n"
+    ret+=util.conv(sentence.value,util.modes.EXPR)
+    return f+ret+";\n"
+
+def sent_for(sentence:ast.For,f=""):
+    return \
+        f+"for ("+util.conv(sentence.target)+" in "+util.conv(sentence.iter)+"){\n"+\
+            util.walk_shallow(sentence.body,f+"  ")+\
+        f+"}\n"
 
 table={
     "Import":sent_import,
     "FunctionDef":sent_funcdef,
     "Return":sent_ret,
     "Assign":sent_assign,
-    "Call":lambda val:expr_call(val)+";\n"
+    "Call":lambda val,f="":f+expr_call(val)+";\n",
+    "For":sent_for
 }
