@@ -14,8 +14,8 @@ def conv(raw):
         print(get("srcs"))
         exit()
 
-def walk_shallow(obj):
+def walk_shallow(obj,f=""):
     tmp=""
     for sentence in obj:
-        tmp+=conv(sentence)
+        tmp+=f+conv(sentence)
     return tmp
