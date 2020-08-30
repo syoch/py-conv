@@ -1,7 +1,8 @@
 import ast
+import util
 
 def eval_sentence(sentence:ast.stmt):
-    print(sentence.__class__,sentence.__dict__,"\n") # debug code
+    print(util.conv(sentence))
 
 def conv(filename:str,dest:str):
     """
