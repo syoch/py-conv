@@ -2,6 +2,9 @@ import ast
 import util
 import datamgr
 
+def a(c,d=1,*,e,f=1,**b):
+    return None
+
 def eval_sentence(sentence:ast.stmt):
     print(util.conv(sentence),end="")
 
@@ -26,7 +29,7 @@ def conv(filename:str,dest:str):
     datamgr.push("srcs",filename)
 
     for sentence in src.body:
-        eval_sentence(sentence)
+        print(util.conv(sentence),end="")
 
 # +-----------------------+
 # |          Test         |

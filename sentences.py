@@ -16,6 +16,11 @@ def sent_improt(sentence:ast.Import):
             tmp+="#include <"+name+">\n"
     return tmp
 
+def sent_funcdef(sentence:ast.FunctionDef):
+    return "Any "+sentence.name+"("+util.conv(sentence.args)+")"+"\n"
+    #print(sentence.body)
+
 table={
-    "Import":sent_improt
+    "Import":sent_improt,
+    "FunctionDef":sent_funcdef
 }
