@@ -2,7 +2,7 @@ import ast
 import util
 
 def eval_sentence(sentence:ast.stmt):
-    print(util.conv(sentence))
+    print(util.conv(sentence),end="")
 
 def conv(filename:str,dest:str):
     """
