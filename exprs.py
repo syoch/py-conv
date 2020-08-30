@@ -33,10 +33,13 @@ def expr_args(val:ast.arguments):
             "**"+util.conv(val.kwarg)
         ]
     )
+def expr_attr(val:ast.Attribute):
+    return util.conv(val.value)+util.conv(val.attr)
 
 table={
     "alias":expr_alias,
     "arguments":expr_args,
     "arg":expr_arg,
+    "Attribute":expr_attr,
     "Constant":lambda a:util.conv(a.value),
 }
