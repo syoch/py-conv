@@ -1,11 +1,12 @@
 from datamgr import get
-import sentences,exprs,basetype
+import sentences,exprs,basetype,operators
 import enum
 
 class modes(enum.Enum):
     EXPR=0
     SENT=1
     BOTH=2
+    OPER=3
 
 def conv(raw,mode:modes=modes.BOTH):
     typename=raw.__class__.__name__
@@ -23,6 +24,13 @@ def conv(raw,mode:modes=modes.BOTH):
             print("Unknown Sentence Type "+typename)
             print(get("srcs"))
             exit()
+    elif mode==modes.OPER:
+        if typename in operators.table:
+            return operators.table[typename]
+        else:
+            print("Unknown Oprator Type "+typename)
+            print(get("srcs"))
+            exit()
     elif mode==modes.BOTH:
         if typename in sentences.table:
             return sentences.table[typename](raw)
@@ -30,6 +38,8 @@ def conv(raw,mode:modes=modes.BOTH):
             return exprs.table[typename](raw)
         elif typename in basetype.table:
             return basetype.table[typename](raw)
+        elif typename in operators.table:
+            return operators.table[typename]
         else:
             print("Unknown Type "+typename)
             print(get("srcs"))
