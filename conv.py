@@ -13,6 +13,8 @@ def a(a,b=1,*,c,d=1,**e): # Test
         print("a==3")
     else:
         print("else")
+    if a==4:
+        print("a==4")
     return None
 
 def conv(filename:str,dest:str):
