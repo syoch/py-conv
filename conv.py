@@ -1,3 +1,4 @@
+import os
 import ast
 import util
 import datamgr
@@ -16,6 +17,11 @@ def a(a,b=1,*,c,d=1,**e): # Test
     if a==4:
         print("a==4")
     return None
+
+def check():
+    #Check dest Folder
+    if not os.path.exists("dest/"):
+        os.mkdir("dest")
 
 def conv(filename:str,dest:str):
     """
@@ -37,11 +43,14 @@ def conv(filename:str,dest:str):
     src=ast.parse(data,filename)
     datamgr.push("srcs",filename)
 
+    fp=open(dest,"w")
     for sentence in src.body:
-        print(util.conv(sentence,util.modes.SENT),end="")
+        fp.write(util.conv(sentence,util.modes.SENT))
+    fp.close()
 
 # +-----------------------+
 # |          Test         |
 # +-----------------------+
 if __name__ == "__main__":
+    check()
     conv("conv.py","dest/conv.cpp")
