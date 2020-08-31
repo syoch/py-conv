@@ -42,13 +42,35 @@ def sent_for(sentence:ast.For,f=""):
             util.walk_shallow(sentence.body,f+"  ")+\
         f+"}\n"
 def sent_if(sentence:ast.If,f=""):
-    print(util.conv(sentence.test))
-    print(sentence.__dict__)
-    exit()
-    return \
-        f+"for ("+util.conv(sentence.target)+" in "+util.conv(sentence.iter)+"){\n"+\
-            util.walk_shallow(sentence.body,f+"  ")+\
-        f+"}\n"
+    elif_list=[]
+
+    #Make Elif Block list
+    tmp=sentence.orelse
+    while len(tmp)!=0 and type(tmp[0])==ast.If and len(tmp[0].orelse)!=0:
+        elif_list.append(tmp)
+        tmp=tmp[0].orelse
+    blocks=[a[0] for a in elif_list]
+
+    elseblock=tmp
+
+
+    tmp=""
+    #If Block
+    tmp+=f+f"if({util.conv(sentence.test)}){{\n"
+    tmp+=f+"  "+util.walk_shallow(sentence.body,f+"  ")+f+"  }"
+
+    #Elif Blocks
+    for block in blocks:
+        tmp+=f+f"else if({util.conv(block.test)}){{\n"
+        tmp+=f+"  "+util.walk_shallow(block.body,f+"  ")+f+"  }"
+
+    #Else Block
+    if len(elseblock)!=0:
+        tmp+=f+f"else{{\n"
+        tmp+=f+"  "+util.walk_shallow(elseblock,f+"  ")+f+"  }"
+    
+    return tmp+"\n"
+
 table={
     "Import":sent_import,
     "FunctionDef":sent_funcdef,
