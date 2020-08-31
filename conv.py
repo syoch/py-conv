@@ -11,6 +11,8 @@ def a(a,b=1,*,c,d=1,**e): # Test
         print("a==2")
     elif a==3:
         print("a==3")
+    else:
+        print("else")
     return None
 
 def conv(filename:str,dest:str):
