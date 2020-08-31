@@ -1,5 +1,6 @@
 from typing import Any
 
+#Queue
 
 queue={}
 
@@ -27,3 +28,16 @@ def pop(name:str) -> None:
     if not name in queue:
         raise f"queue `{name}` isn't defined"
     return queue[name].pop()
+
+
+# Value
+values={}
+def set_val(name:str,value:Any)->None:
+    if name in values:
+        raise Exception(f"{name} is already defined")
+    values[name]=value
+
+def get_val(name:str)->Any:
+    if name not in values:
+        raise Exception(f"{name} isn't defined")
+    return values[name]
