@@ -44,4 +44,4 @@ def conv(filename:str,dest:str):
 # |          Test         |
 # +-----------------------+
 if __name__ == "__main__":
-    conv("conv.py","dest.cpp")
+    conv("conv.py","dest/conv.cpp")
