@@ -5,9 +5,6 @@ import datamgr
 def a(c,d=1,*,e,f=1,**b):
     return None
 
-def eval_sentence(sentence:ast.stmt):
-    print(util.conv(sentence),end="")
-
 def conv(filename:str,dest:str):
     """
     Convert python to c++ source code
