@@ -5,7 +5,7 @@ import os
 import util
 import datamgr
 
-def sent_improt(sentence:ast.Import):
+def sent_import(sentence:ast.Import):
     tmp=""
     for a in sentence.names:
         name=util.conv(a)
@@ -17,5 +17,5 @@ def sent_improt(sentence:ast.Import):
     return tmp
 
 table={
-    "Import":sent_improt
+    "Import":sent_import
 }
