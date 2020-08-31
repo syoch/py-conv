@@ -28,7 +28,7 @@ def conv(raw,mode:modes=modes.BOTH):
         if typename in operators.table:
             return operators.table[typename]
         else:
-            print("Unknown Oprator Type "+typename)
+            print("Unknown Operator Type "+typename)
             print(get("srcs"))
             exit()
     elif mode==modes.BOTH:
