@@ -16,21 +16,21 @@ def conv(raw,mode:modes=modes.BOTH):
         else:
             print("Unknown Expr Type "+typename)
             print(get("srcs"))
-            exit()
+            exit(0)
     elif mode==modes.SENT:
         if typename in sentences.table:
             return sentences.table[typename](raw)
         else:
             print("Unknown Sentence Type "+typename)
             print(get("srcs"))
-            exit()
+            exit(0)
     elif mode==modes.OPER:
         if typename in operators.table:
             return operators.table[typename]
         else:
             print("Unknown Operator Type "+typename)
             print(get("srcs"))
-            exit()
+            exit(0)
     elif mode==modes.BOTH:
         if typename in sentences.table:
             return sentences.table[typename](raw)
@@ -43,7 +43,7 @@ def conv(raw,mode:modes=modes.BOTH):
         else:
             print("Unknown Type "+typename)
             print(get("srcs"))
-            exit()
+            exit(0)
 
 def walk_shallow(obj,f=""):
     tmp=""
