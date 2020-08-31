@@ -2,7 +2,7 @@ import ast
 import util
 import datamgr
 
-def a(a,b=1,*,c,d=1,**e):
+def a(a,b=1,*,c,d=1,**e): # Test
     if a==0:
         print("a==0")
     elif a==1:
