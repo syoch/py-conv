@@ -2,7 +2,15 @@ import ast
 import util
 import datamgr
 
-def a(c,d=1,*,e,f=1,**b):
+def a(a,b=1,*,c,d=1,**e):
+    if a==0:
+        print("a==0")
+    elif a==1:
+        print("a==1")
+    elif a==2:
+        print("a==2")
+    elif a==3:
+        print("a==3")
     return None
 
 def conv(filename:str,dest:str):
