@@ -64,9 +64,14 @@ def expr_UnaryOp(val:ast.UnaryOp):
 def expr_Slice(val:ast.slice):
     tmp=""
     if val.lower!=None:tmp+=util.conv(val.lower)
+    tmp+=":"
     if val.upper!=None:tmp+=util.conv(val.upper)
+    tmp+=":"
     if val.step!=None:tmp+=util.conv(val.step)
-    return tmp
+    return "["+tmp+"]"
+
+def expr_Subscript(val:ast.Subscript):
+    return util.conv(val.value)+util.conv(val.slice)
 
 table={
     "alias":expr_alias,
@@ -79,5 +84,6 @@ table={
     "Call":expr_call,
     "Compare":expr_comp,
     "UnaryOp":expr_UnaryOp,
-    "Slice":expr_Slice
+    "Slice":expr_Slice,
+    "Subscript":expr_Subscript
 }
