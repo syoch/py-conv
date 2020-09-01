@@ -76,6 +76,9 @@ def expr_Index(val:ast.Index):
 def expr_Subscript(val:ast.Subscript):
     return util.conv(val.value)+util.conv(val.slice)
 
+def expr_BinOp(val:ast.BinOp):
+    return util.conv(val.left)+util.conv(val.op)+util.conv(val.right)
+
 table={
     "alias":expr_alias,
     "arguments":expr_args,
@@ -89,5 +92,6 @@ table={
     "UnaryOp":expr_UnaryOp,
     "Slice":expr_Slice,
     "Subscript":expr_Subscript,
-    "Index":expr_Index
+    "Index":expr_Index,
+    "BinOp":expr_BinOp
 }
