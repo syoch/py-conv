@@ -2,5 +2,6 @@
 
 table={
     "Eq":"==",
-    "Not":"not"
+    "Not":"not",
+    "Add":"+"
 }
