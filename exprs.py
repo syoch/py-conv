@@ -61,6 +61,13 @@ def expr_comp(val:ast.Compare):
 def expr_UnaryOp(val:ast.UnaryOp):
     return util.conv(val.op)+" "+util.conv(val.operand,mode=util.modes.EXPR)
 
+def expr_Slice(val:ast.slice):
+    tmp=""
+    if val.lower!=None:tmp+=util.conv(val.lower)
+    if val.upper!=None:tmp+=util.conv(val.upper)
+    if val.step!=None:tmp+=util.conv(val.step)
+    return tmp
+
 table={
     "alias":expr_alias,
     "arguments":expr_args,
@@ -71,5 +78,6 @@ table={
     "Expr":lambda a:util.conv(a.value),
     "Call":expr_call,
     "Compare":expr_comp,
-    "UnaryOp":expr_UnaryOp
+    "UnaryOp":expr_UnaryOp,
+    "Slice":expr_Slice
 }
