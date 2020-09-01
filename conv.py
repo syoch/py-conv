@@ -23,7 +23,7 @@ def check():
     if not os.path.exists("dest/"):
         os.mkdir("dest")
 
-def conv(filename:str,dest:str):
+def conv(filename:str):
     """
     Convert python to c++ source code
 
@@ -32,18 +32,23 @@ def conv(filename:str,dest:str):
        Name  | Description|Type
     ---------+------------+-----
     filename |   source   | str
-    dest     |   dest     | str
 
     Returns:None
     """
-    fp=open(filename,"r")
-    data=fp.read()
-    fp.close()
+    src_path=os.path.split(os.path.abspath(filename))[0]
+    src_name=os.path.splitext(filename)[0]
 
-    src=ast.parse(data,filename)
-    datamgr.push("srcs",filename)
+    src_file=os.path.abspath(filename)
+    dest_file=os.path.join(src_path,"dest",src_name+".cpp")
 
-    fp=open(dest,"w")
+    os.chdir(os.path.dirname(src_file))
+
+    with open(src_file,"r") as fp:
+        src=ast.parse(fp.read(),src_file)
+
+    datamgr.push("srcs",src_file)
+
+    fp=open(dest_file,"w")
     for sentence in src.body:
         fp.write(util.conv(sentence,util.modes.SENT))
     fp.close()
@@ -53,4 +58,4 @@ def conv(filename:str,dest:str):
 # +-----------------------+
 if __name__ == "__main__":
     check()
-    conv("conv.py","dest/conv.cpp")
+    conv("conv.py")
