@@ -70,6 +70,9 @@ def expr_Slice(val:ast.slice):
     if val.step!=None:tmp+=util.conv(val.step)
     return "["+tmp+"]"
 
+def expr_Index(val:ast.Index):
+    return "["+util.conv(val.value)+"]"
+
 def expr_Subscript(val:ast.Subscript):
     return util.conv(val.value)+util.conv(val.slice)
 
@@ -85,5 +88,6 @@ table={
     "Compare":expr_comp,
     "UnaryOp":expr_UnaryOp,
     "Slice":expr_Slice,
-    "Subscript":expr_Subscript
+    "Subscript":expr_Subscript,
+    "Index":expr_Index
 }
