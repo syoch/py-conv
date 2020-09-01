@@ -9,7 +9,7 @@ import datamgr
 def sent_import(sentence:ast.Import,f=""):
     tmp=""
     for a in sentence.names:
-        name=util.conv(a)
+        name=util.conv(a)[1:-1]
         if os.path.exists(name+".py"):
             tmp+=f+"#include \""+name+".cpp"+"\"\n"
             datamgr.push("srcs",name+".py")
