@@ -8,7 +8,7 @@ class modes(enum.Enum):
     BOTH=2
     OPER=3
 
-def conv(raw,mode:modes=modes.BOTH):
+def conv(raw,f="",mode:modes=modes.BOTH):
     typename=raw.__class__.__name__
     if mode==modes.EXPR:
         if typename in exprs.table:
@@ -19,7 +19,7 @@ def conv(raw,mode:modes=modes.BOTH):
             exit(0)
     elif mode==modes.SENT:
         if typename in sentences.table:
-            return sentences.table[typename](raw)
+            return sentences.table[typename](raw,f=f)
         else:
             print("Unknown Sentence Type "+typename)
             print(get("srcs"))
@@ -33,7 +33,7 @@ def conv(raw,mode:modes=modes.BOTH):
             exit(0)
     elif mode==modes.BOTH:
         if typename in sentences.table:
-            return sentences.table[typename](raw)
+            return sentences.table[typename](raw,f=f)
         elif typename in exprs.table:
             return exprs.table[typename](raw)
         elif typename in basetype.table:
@@ -48,5 +48,5 @@ def conv(raw,mode:modes=modes.BOTH):
 def walk_shallow(obj,f=""):
     tmp=""
     for sentence in obj:
-        tmp+=f+conv(sentence)
+        tmp+=f+str(conv(sentence,f))
     return tmp

@@ -50,7 +50,7 @@ def conv(filename:str):
 
     fp=open(dest_file,"w")
     for sentence in src.body:
-        fp.write(util.conv(sentence,util.modes.SENT))
+        fp.write(util.conv(sentence,mode=util.modes.SENT))
     fp.close()
 
 # +-----------------------+
