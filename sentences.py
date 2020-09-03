@@ -45,6 +45,13 @@ def sent_for(sentence:ast.For,f=""):
         f+"for ("+util.conv(sentence.target,mode=util.modes.EXPR)+" in "+util.conv(sentence.iter,util.modes.EXPR)+"){\n"+\
             util.walk_shallow(sentence.body,f+"  ")+\
         f+"}\n"
+
+def sent_while(sentence:ast.While,f=""):
+    return \
+        f+"while ("+util.conv(sentence.test,mode=util.modes.EXPR)+"){\n"+\
+            util.walk_shallow(sentence.body,f+"  ")+\
+        f+"}\n"
+
 def sent_if(sentence:ast.If,f=""):
     elif_list=[]
 
@@ -96,6 +103,7 @@ table={
     "Return":sent_ret,
     "Assign":sent_assign,
     "For":sent_for,
+    "While":sent_while,
     "If":sent_if,
     "With":sent_with,
     "Expr":lambda a,f="":util.conv(a.value,f=f),
