@@ -4,11 +4,6 @@ import ast
 import util
 
 
-def expr_alias(val:ast.alias):
-    alias=util.conv(val.name)
-    if val.asname!=None:
-        alias+="->"+val.asname
-    return alias
 
 def expr_arg(val:ast.arg):
     ret=val.arg
@@ -79,7 +74,6 @@ def expr_BinOp(val:ast.BinOp):
     return util.conv(val.left)+util.conv(val.op)+util.conv(val.right)
 
 table={
-    "alias":expr_alias,
     "arguments":expr_args,
     "arg":expr_arg,
     "Attribute":expr_attr,
