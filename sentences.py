@@ -111,6 +111,29 @@ def sent_with(sentence:ast.With,f=""):
     tmp+=f+"\n"
     return tmp
 
+def sent_classdef(sentence:ast.ClassDef,f=""):
+    tmp=""
+    tmp+=f+"class _"+sentence.name
+    if len(sentence.bases) != 0:
+        tmp+=": "
+    for base in sentence.bases:
+        tmp+="public "+util.conv(base,mode=util.modes.EXPR)+", "
+    tmp=tmp[:-2]
+    tmp+="\n"
+    tmp+="{\n"
+
+    tmp+=util.walk_shallow(sentence.body,f=f+"  ")
+    tmp+="}\n"
+    
+    decor_proc="_"+sentence.name
+    decors=[util.conv(a) for a in sentence.decorator_list]
+    decors.reverse()
+    for decor in decors:
+        decor_proc=f"{decor}({decor_proc})"
+    tmp+=f"#define {sentence.name} {decor_proc}\n"
+    
+    return tmp
+
 table={
     "Import":sent_import,
     "ImportFrom":sent_importfrom,
@@ -123,5 +146,6 @@ table={
     "With":sent_with,
     "Expr":lambda a,f="":util.conv(a.value,f=f),
     "Call":lambda val,f="":f+expr_call(val)+";\n",
-    "Pass":lambda a,f="": "pass\n"
+    "Pass":lambda a,f="": f+"pass\n",
+    "ClassDef":sent_classdef,
 }
