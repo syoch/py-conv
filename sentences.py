@@ -18,9 +18,13 @@ def sent_import(sentence:ast.Import,f=""):
     return tmp
 
 def sent_funcdef(sentence:ast.FunctionDef,f=""):
+    if type(sentence.body[0]) == ast.Expr and type(sentence.body[0].value) == ast.Constant:
+        body=sentence.body[1:]
+    else:
+        body=sentence.body
     return \
         f+"Any "+sentence.name+"("+expr_args(sentence.args)+")"+"{\n"+\
-            util.walk_shallow(sentence.body,f+"  ")+\
+            util.walk_shallow(body,f+"  ")+\
         "}\n"
 
 def sent_ret(sentence:ast.Return,f=""):
@@ -91,9 +95,9 @@ table={
     "FunctionDef":sent_funcdef,
     "Return":sent_ret,
     "Assign":sent_assign,
-    "Call":lambda val,f="":f+expr_call(val)+";\n",
     "For":sent_for,
     "If":sent_if,
     "With":sent_with,
     "Expr":lambda a,f="":util.conv(a.value,f=f),
+    "Call":lambda val,f="":f+expr_call(val)+";\n",
 }
