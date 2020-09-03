@@ -73,7 +73,7 @@ def expr_Index(val:ast.Index):
     return "["+util.conv(val.value)+"]"
 
 def expr_Subscript(val:ast.Subscript):
-    return util.conv(val.value)+util.conv(val.slice)
+    return util.conv(val.value,mode=util.modes.EXPR)+util.conv(val.slice)
 
 def expr_BinOp(val:ast.BinOp):
     return util.conv(val.left)+util.conv(val.op)+util.conv(val.right)
