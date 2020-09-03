@@ -24,7 +24,7 @@ def sent_funcdef(sentence:ast.FunctionDef,f=""):
         "}\n"
 
 def sent_ret(sentence:ast.Return,f=""):
-    return f+"Return "+util.conv(sentence.value,mode=util.modes.EXPR)+";\n"
+    return f+"return "+util.conv(sentence.value,mode=util.modes.EXPR)+";\n"
 
 def sent_assign(sentence:ast.Assign,f=""):
     ret=""
@@ -75,14 +75,15 @@ def sent_if(sentence:ast.If,f=""):
 
 def sent_with(sentence:ast.With,f=""):
     tmp=""
+    tmp+=f+"\n"
     for item in sentence.items:
         tmp+=f+util.conv(item.optional_vars)+" = "+util.conv(item.context_expr,mode=util.modes.EXPR)+".__enter__();\n"
     
-    tmp+=util.walk_shallow(sentence.body,f+"  ")
+    tmp+=util.walk_shallow(sentence.body,f)
 
     for item in sentence.items:
         tmp+=f+util.conv(item.optional_vars)+" = "+util.conv(item.context_expr,mode=util.modes.EXPR)+".__exit__(nullptr,nullptr,nullptr);\n"
-    
+    tmp+=f+"\n"
     return tmp
 
 table={

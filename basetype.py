@@ -1,5 +1,5 @@
 table={
-    "NoneType":lambda a:"None",
+    "NoneType":lambda a:"nullptr",
     "str":lambda a:"\""+a+"\"",
     "int":lambda a:str(a),
 }

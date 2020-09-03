@@ -11,27 +11,26 @@ def expr_alias(val:ast.alias):
     return alias
 
 def expr_arg(val:ast.arg):
-    ret=util.conv(val.arg)
+    ret=val.arg
     if val.annotation:
-        return ret+":"+util.conv(val.annotation)
+        return util.conv(val.annotation)+" "+ret
     else:
-        return ret
+        return "Any "+ret
 
 def expr_args(val:ast.arguments):
     defaults=[None]*(len(val.args)-len(val.defaults))+val.defaults
-    return ", ".join(
-        [
+    tmp=[]
+    tmp+=[
             util.conv(a[0])+"="+util.conv(a[1])
             for a in zip(val.args,defaults)
-        ]+[
-            "*"+util.conv(val.vararg)
-        ]+[
+        ]
+    if val.vararg != None:tmp+=["*"+util.conv(val.vararg)]
+    tmp+=[
             util.conv(a[0])+"="+util.conv(a[1])
             for a in zip(val.kwonlyargs,val.kw_defaults)
-        ]+[
-            "**"+util.conv(val.kwarg)
         ]
-    )
+    if val.kwarg != None:tmp+=["**"+util.conv(val.kwarg)]
+    return ", ".join(tmp)
 
 def expr_attr(val:ast.Attribute):
     return util.conv(val.value)+"."+val.attr
