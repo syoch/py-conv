@@ -48,5 +48,5 @@ def conv(raw,f="",mode:modes=modes.BOTH):
 def walk_shallow(obj,f=""):
     tmp=""
     for sentence in obj:
-        tmp+=f+str(conv(sentence,f))
+        tmp+=str(conv(sentence,f))
     return tmp
