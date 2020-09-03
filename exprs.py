@@ -73,6 +73,9 @@ def expr_Subscript(val:ast.Subscript):
 def expr_BinOp(val:ast.BinOp):
     return util.conv(val.left)+util.conv(val.op)+util.conv(val.right)
 
+def expr_lambda(val:ast.Lambda):
+    return "lambda "+expr_args(val.args)+": "+util.conv(val.body,mode=util.modes.EXPR)
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -85,5 +88,6 @@ table={
     "Slice":expr_Slice,
     "Subscript":expr_Subscript,
     "Index":expr_Index,
-    "BinOp":expr_BinOp
+    "BinOp":expr_BinOp,
+    "Lambda":expr_lambda
 }
