@@ -3,6 +3,17 @@ import ast
 import util
 import datamgr
 
+a=lambda x:print("a",x)
+b=lambda x:print("b",x)
+c=lambda x:print("c",x)
+@a
+@b
+@c
+class test(ast.expr):
+    pass
+
+print(test)
+
 def check():
     #Check dest Folder
     if not os.path.exists("dest/"):
