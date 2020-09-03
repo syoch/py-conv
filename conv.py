@@ -46,8 +46,8 @@ def conv(filename:str):
 if __name__ == "__main__":
     check()
     conv("conv.py")
-    while datamgr.have_data("src"):
-        conv(datamgr.popleft("srcs"))
+    while datamgr.have_data("srcs"):
+        conv(os.path.relpath(datamgr.popleft("srcs")))
 
 def a(a): # Test
     if a==0:
