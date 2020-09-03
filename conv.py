@@ -58,6 +58,9 @@ def a(a,b=1,*,c,d=1,**e): # Test
         print("a==3")
     else:
         print("else")
+
     if a==4:
         print("a==4")
+        if a/2==2:
+            print("a/2==2")
     return None
