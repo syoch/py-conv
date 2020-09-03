@@ -4,5 +4,6 @@ table={
     "Eq":"==",
     "Not":"not",
     "Add":"+",
-    "Div":"/"
+    "Div":"/",
+    "In":"in"
 }
