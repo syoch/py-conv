@@ -3,21 +3,6 @@ import ast
 import util
 import datamgr
 
-def a(a,b=1,*,c,d=1,**e): # Test
-    if a==0:
-        print("a==0")
-    elif a==1:
-        print("a==1")
-    elif a==2:
-        print("a==2")
-    elif a==3:
-        print("a==3")
-    else:
-        print("else")
-    if a==4:
-        print("a==4")
-    return None
-
 def check():
     #Check dest Folder
     if not os.path.exists("dest/"):
@@ -52,6 +37,7 @@ def conv(filename:str):
     for sentence in src.body:
         fp.write(util.conv(sentence,mode=util.modes.SENT))
     fp.close()
+    os.system("cat dest/conv.cpp")
 
 # +-----------------------+
 # |          Test         |
@@ -59,3 +45,19 @@ def conv(filename:str):
 if __name__ == "__main__":
     check()
     conv("conv.py")
+
+
+def a(a,b=1,*,c,d=1,**e): # Test
+    if a==0:
+        print("a==0")
+    elif a==1:
+        print("a==1")
+    elif a==2:
+        print("a==2")
+    elif a==3:
+        print("a==3")
+    else:
+        print("else")
+    if a==4:
+        print("a==4")
+    return None
