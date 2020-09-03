@@ -9,14 +9,28 @@ import datamgr
 def sent_import(sentence:ast.Import,f=""):
     tmp=""
     for a in sentence.names:
-        name=util.conv(a)[1:-1]
+        name=a.name
         if os.path.exists(name+".py"):
             tmp+=f+"#include \""+name+".cpp"+"\"\n"
             datamgr.push("srcs",os.path.abspath(name+".py"))
         else:
             tmp+=f+"#include <"+name+">\n"
+        if a.asname:
+            tmp+=f+f"#define {a.asname} {name}\n"
     return tmp
 
+def sent_importfrom(sentence:ast.ImportFrom,f=""):
+    tmp=""
+    name=sentence.module
+    if os.path.exists(name+".py"):
+        tmp+=f+"#include \""+name+".cpp"+"\"\n"
+        datamgr.push("srcs",os.path.abspath(name+".py"))
+    else:
+        tmp+=f+"#include <"+name+">\n"
+    for a in sentence.names:
+        if a.asname:
+            tmp+=f+f"#define {a.asname} {a.name}\n"
+    return tmp
 def sent_funcdef(sentence:ast.FunctionDef,f=""):
     if type(sentence.body[0]) == ast.Expr and type(sentence.body[0].value) == ast.Constant:
         body=sentence.body[1:]
@@ -99,6 +113,7 @@ def sent_with(sentence:ast.With,f=""):
 
 table={
     "Import":sent_import,
+    "ImportFrom":sent_importfrom,
     "FunctionDef":sent_funcdef,
     "Return":sent_ret,
     "Assign":sent_assign,
