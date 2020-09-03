@@ -12,7 +12,7 @@ def sent_import(sentence:ast.Import,f=""):
         name=util.conv(a)[1:-1]
         if os.path.exists(name+".py"):
             tmp+=f+"#include \""+name+".cpp"+"\"\n"
-            datamgr.push("srcs",name+".py")
+            datamgr.push("srcs",os.path.abspath(name+".py"))
         else:
             tmp+=f+"#include <"+name+">\n"
     return tmp
