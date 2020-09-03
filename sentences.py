@@ -55,19 +55,23 @@ def sent_if(sentence:ast.If,f=""):
 
 
     tmp=""
+    print(f+"|")
     #If Block
     tmp+=f+f"if({util.conv(sentence.test)}){{\n"
-    tmp+=f+"  "+util.walk_shallow(sentence.body,f+"  ")+f+"  }"
+    tmp+=util.walk_shallow(sentence.body,f=f+"  ")
+    tmp+=f+"}"
 
     #Elif Blocks
     for block in blocks:
-        tmp+=f+f"else if({util.conv(block.test)}){{\n"
-        tmp+=f+"  "+util.walk_shallow(block.body,f+"  ")+f+"  }"
+        tmp+=f"else if({util.conv(block.test)}){{\n"
+        tmp+=util.walk_shallow(block.body,f+"  ")
+        tmp+=f+"}"
 
     #Else Block
     if len(elseblock)!=0:
-        tmp+=f+f"else{{\n"
-        tmp+=f+"  "+util.walk_shallow(elseblock,f+"  ")+f+"  }"
+        tmp+=f"else{{\n"
+        tmp+=util.walk_shallow(elseblock,f+"  ")
+        tmp+=f+"}"
     return tmp+"\n"
 
 def sent_with(sentence:ast.With,f=""):
@@ -90,5 +94,6 @@ table={
     "Call":lambda val,f="":f+expr_call(val)+";\n",
     "For":sent_for,
     "If":sent_if,
-    "With":sent_with
+    "With":sent_with,
+    "Expr":lambda a,f="":util.conv(a.value,f=f),
 }

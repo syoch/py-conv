@@ -56,7 +56,7 @@ def expr_call(val:ast.Call):
     return tmp
 
 def expr_comp(val:ast.Compare):
-    return util.conv(val.left)+" ".join([util.conv(op)+" "+util.conv(val)+" " for (op,val) in zip(val.ops,val.comparators)])
+    return util.conv(val.left)+" ".join([util.conv(op)+util.conv(val)+" " for (op,val) in zip(val.ops,val.comparators)])[:-1]
 
 def expr_UnaryOp(val:ast.UnaryOp):
     return util.conv(val.op)+" "+util.conv(val.operand,mode=util.modes.EXPR)
@@ -86,7 +86,6 @@ table={
     "Attribute":expr_attr,
     "Name":expr_name,
     "Constant":lambda a:util.conv(a.value),
-    "Expr":lambda a:util.conv(a.value),
     "Call":expr_call,
     "Compare":expr_comp,
     "UnaryOp":expr_UnaryOp,
