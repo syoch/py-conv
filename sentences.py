@@ -55,7 +55,6 @@ def sent_if(sentence:ast.If,f=""):
 
 
     tmp=""
-    print(f+"|")
     #If Block
     tmp+=f+f"if({util.conv(sentence.test)}){{\n"
     tmp+=util.walk_shallow(sentence.body,f=f+"  ")
