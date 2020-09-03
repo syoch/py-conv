@@ -37,8 +37,6 @@ def conv(filename:str):
     for sentence in src.body:
         fp.write(util.conv(sentence,mode=util.modes.SENT))
     fp.close()
-    os.system("cat dest/conv.cpp")
-
 # +-----------------------+
 # |          Test         |
 # +-----------------------+
@@ -47,7 +45,7 @@ if __name__ == "__main__":
     conv("conv.py")
 
 
-def a(a,b=1,*,c,d=1,**e): # Test
+def a(a): # Test
     if a==0:
         print("a==0")
     elif a==1:
