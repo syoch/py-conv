@@ -43,7 +43,7 @@ def popleft(name:str) -> None:
 def have_data(name:str) -> bool:
     if not name in queue:
         return False
-    if len(queue[name]==0):
+    if len(queue[name])==0:
         return False
     else:
         return True
