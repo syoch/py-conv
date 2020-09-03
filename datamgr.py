@@ -29,6 +29,13 @@ def pop(name:str) -> None:
         raise f"queue `{name}` isn't defined"
     return queue[name].pop()
 
+def have_data(name:str) -> bool:
+    if not name in queue:
+        return False
+    if len(queue[name]==0):
+        return False
+    else:
+        return True
 
 # Value
 values={}
