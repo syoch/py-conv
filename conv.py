@@ -31,20 +31,21 @@ def conv(filename:str):
     with open(src_file,"r") as fp:
         src=ast.parse(fp.read(),src_file)
 
-    datamgr.push("srcs",src_file)
+    datamgr.pushleft("srcs",src_file)
 
     fp=open(dest_file,"w")
     fp.write("#include <base>\n")
     for sentence in src.body:
         fp.write(util.conv(sentence,mode=util.modes.SENT))
     fp.close()
+    datamgr.popleft("srcs")
+
 # +-----------------------+
 # |          Test         |
 # +-----------------------+
 if __name__ == "__main__":
     check()
     conv("conv.py")
-
 
 def a(a): # Test
     if a==0:
