@@ -123,4 +123,5 @@ table={
     "With":sent_with,
     "Expr":lambda a,f="":util.conv(a.value,f=f),
     "Call":lambda val,f="":f+expr_call(val)+";\n",
+    "Pass":lambda a,f="": "pass\n"
 }
