@@ -34,6 +34,7 @@ def conv(filename:str):
     datamgr.push("srcs",src_file)
 
     fp=open(dest_file,"w")
+    fp.write("#include <base>\n")
     for sentence in src.body:
         fp.write(util.conv(sentence,mode=util.modes.SENT))
     fp.close()
