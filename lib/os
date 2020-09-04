@@ -1,0 +1,61 @@
+#include <direct.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <iostream>
+class os {
+public:
+	void makedirs(const char* name, bool exist_ok);
+	void removedirs(const char* name);
+	void renames(const char* old, const char* _new);
+};
+
+class OSError
+{
+private:
+	const char* msg;
+public:
+	OSError(const char* msg) : msg(msg) { } 
+	const char* what() { return msg; }
+};
+
+
+void os::makedirs(const char* name, bool exist_ok = false) {
+	const char* dir = name;
+	struct stat statBuf;
+	int result = 1;
+	if (stat(dir, &statBuf) != 0) {
+		result = _mkdir(name);
+	} else if (exist_ok == true && stat(dir, &statBuf) == 0) {
+		result = _mkdir(name);
+	}
+	if (result == 1) {
+		throw OSError("Cannot rely on checking for EEXIST, since the operating system could give priority to other errors like EACCES or EROFS");
+	}
+}
+
+void os::removedirs(const char* name) {
+	int result = _rmdir(name);
+	if (result == 1) {
+		throw;
+	}
+}
+
+void os::renames(const char* old, const char* _new) {
+	os os;
+	struct stat statBuf;
+	if (stat(old, &statBuf) != 0) {
+		os.makedirs(_new);
+	}
+	else
+	{
+		if (rename(old, _new) != 0) {
+			return;
+		}
+	}
+	os.removedirs(old);
+}
+
+int main() {
+	os os;
+	os.renames("tes", "test");
+}
