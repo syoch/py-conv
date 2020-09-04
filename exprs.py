@@ -90,7 +90,6 @@ def expr_joinedstr(val:ast.JoinedStr):
 def expr_formattedvalue(val:ast.FormattedValue):
     #FormattedValue(expr value, int? conversion, expr? format_spec)
     return (util.conv(val.value))
-    exit()
 
 table={
     "arguments":expr_args,
