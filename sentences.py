@@ -140,6 +140,9 @@ def sent_augAssign(sentence:ast.AugAssign,f=""):
 def sent_raise(sentence:ast.Raise,f=""):
     return "throw "+util.conv(sentence.exc,mode=util.modes.EXPR)
     
+def sent_delete(sentence:ast.Delete,f=""):
+    return "delete" + ", ".join([util.conv(a,util.modes.EXPR) for a in sentence.targets])
+
 table={
     "Import":sent_import,
     "ImportFrom":sent_importfrom,
@@ -155,5 +158,6 @@ table={
     "Pass":lambda a,f="": f+"pass\n",
     "ClassDef":sent_classdef,
     "AugAssign":sent_augAssign,
-    "Raise":sent_raise
+    "Raise":sent_raise,
+    "Delete":sent_delete
 }
