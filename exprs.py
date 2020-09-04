@@ -50,7 +50,9 @@ def expr_call(val:ast.Call):
     return tmp
 
 def expr_comp(val:ast.Compare):
-    return util.conv(val.left)+" ".join([util.conv(op)+util.conv(val)+" " for (op,val) in zip(val.ops,val.comparators)])[:-1]
+    return \
+        util.conv(val.left,mode=util.modes.EXPR)+\
+        " ".join([util.conv(op)+util.conv(val)+" " for (op,val) in zip(val.ops,val.comparators)])[:-1]
 
 def expr_UnaryOp(val:ast.UnaryOp):
     return util.conv(val.op)+" "+util.conv(val.operand,mode=util.modes.EXPR)
@@ -71,7 +73,7 @@ def expr_Subscript(val:ast.Subscript):
     return util.conv(val.value,mode=util.modes.EXPR)+util.conv(val.slice)
 
 def expr_BinOp(val:ast.BinOp):
-    return util.conv(val.left)+util.conv(val.op)+util.conv(val.right)
+    return util.conv(val.left)+util.conv(val.op,mode=util.modes.OPER)+util.conv(val.right)
 
 def expr_lambda(val:ast.Lambda):
     return "lambda "+expr_args(val.args)+": "+util.conv(val.body,mode=util.modes.EXPR)
@@ -91,6 +93,11 @@ def expr_formattedvalue(val:ast.FormattedValue):
     #FormattedValue(expr value, int? conversion, expr? format_spec)
     return (util.conv(val.value))
 
+def expr_BoolOp(val:ast.BoolOp):
+    #BoolOp(boolop op, expr* values)
+    vals=[util.conv(a,mode=util.modes.EXPR) for a in val.values]
+    return vals[0]+" "+util.conv(val.op,mode=util.modes.OPER)+" "+vals[1]
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -107,5 +114,6 @@ table={
     "Lambda":expr_lambda,
     "Dict":expr_dict,
     "JoinedStr":expr_joinedstr,
-    "FormattedValue":expr_formattedvalue
+    "FormattedValue":expr_formattedvalue,
+    "BoolOp":expr_BoolOp
 }
