@@ -6,5 +6,6 @@ table={
     "Add":"+",
     "Div":"/",
     "In":"in",
-    "NotIn":"not in"
+    "NotIn":"not in",
+    "And":"and"
 }
