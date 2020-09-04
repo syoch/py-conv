@@ -76,6 +76,14 @@ def expr_BinOp(val:ast.BinOp):
 def expr_lambda(val:ast.Lambda):
     return "lambda "+expr_args(val.args)+": "+util.conv(val.body,mode=util.modes.EXPR)
 
+def expr_dict(val:ast.Dict):
+    tmp=""
+    tmp+="{"
+    for k,v in zip(val.keys,val.values):
+        tmp+=k+":"+v+","
+    tmp+="}"
+    return tmp
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -89,5 +97,6 @@ table={
     "Subscript":expr_Subscript,
     "Index":expr_Index,
     "BinOp":expr_BinOp,
-    "Lambda":expr_lambda
+    "Lambda":expr_lambda,
+    "Dict":expr_dict
 }
