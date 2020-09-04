@@ -2,10 +2,11 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <iostream>
+
 class os {
 public:
-	void makedirs(const char* name, bool exist_ok);
-	void removedirs(const char* name);
+	void mkdir(const char* name, bool exist_ok);
+	void rmdir(const char* name);
 	void renames(const char* old, const char* _new);
 };
 
@@ -19,7 +20,7 @@ public:
 };
 
 
-void os::makedirs(const char* name, bool exist_ok = false) {
+void os::mkdir(const char* name, bool exist_ok = false) {
 	const char* dir = name;
 	struct stat statBuf;
 	int result = 1;
@@ -33,7 +34,7 @@ void os::makedirs(const char* name, bool exist_ok = false) {
 	}
 }
 
-void os::removedirs(const char* name) {
+void os::rmdir(const char* name) {
 	int result = _rmdir(name);
 	if (result == 1) {
 		throw;
@@ -44,7 +45,7 @@ void os::renames(const char* old, const char* _new) {
 	os os;
 	struct stat statBuf;
 	if (stat(old, &statBuf) != 0) {
-		os.makedirs(_new);
+		os.mkdir(_new);
 	}
 	else
 	{
@@ -52,7 +53,7 @@ void os::renames(const char* old, const char* _new) {
 			return;
 		}
 	}
-	os.removedirs(old);
+	os.rmdir(old);
 }
 
 int main() {
