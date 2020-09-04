@@ -87,6 +87,11 @@ def expr_dict(val:ast.Dict):
 def expr_joinedstr(val:ast.JoinedStr):
     return "".join([util.conv(a,util.modes.EXPR) for a in val.values])
 
+def expr_formattedvalue(val:ast.FormattedValue):
+    #FormattedValue(expr value, int? conversion, expr? format_spec)
+    return (util.conv(val.value))
+    exit()
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -102,5 +107,6 @@ table={
     "BinOp":expr_BinOp,
     "Lambda":expr_lambda,
     "Dict":expr_dict,
-    "JoinedStr":expr_joinedstr
+    "JoinedStr":expr_joinedstr,
+    "FormattedValue":expr_formattedvalue
 }
