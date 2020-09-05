@@ -1,4 +1,4 @@
-from datamgr import get
+import datamgr
 import sentences,exprs,basetype,operators
 import enum
 
