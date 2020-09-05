@@ -10,6 +10,7 @@
 class Any: public std::any{
     using std::any::any;
 
+public:
     const char* toString(){
         static str tmp = std::any_cast<str>(*this);
         return tmp.c_str();
