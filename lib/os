@@ -14,14 +14,10 @@ public:
 	void renames(Any old, Any _new);
 };
 
-class OSError
+class OSError: public std::runtime_error
 {
-private:
-	Any msg;
-
 public:
-	OSError(Any msg) : msg(msg) {}
-	Any what() { return msg; }
+	OSError(const char* msg) : runtime_error(msg){}
 };
 
 #endif // !_OS_
