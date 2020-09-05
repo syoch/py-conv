@@ -73,7 +73,7 @@ def expr_Subscript(val:ast.Subscript):
     return util.conv(val.value,mode=util.modes.EXPR)+util.conv(val.slice)
 
 def expr_BinOp(val:ast.BinOp):
-    return util.conv(val.left)+util.conv(val.op,mode=util.modes.OPER)+util.conv(val.right)
+    return util.conv(val.left)+util.conv(val.op,mode=util.modes.EXPR)+util.conv(val.right)
 
 def expr_lambda(val:ast.Lambda):
     return "lambda "+expr_args(val.args)+": "+util.conv(val.body,mode=util.modes.EXPR)
@@ -94,7 +94,7 @@ def expr_formattedvalue(val:ast.FormattedValue):
 
 def expr_BoolOp(val:ast.BoolOp):
     vals=[util.conv(a,mode=util.modes.EXPR) for a in val.values]
-    return vals[0]+" "+util.conv(val.op,mode=util.modes.OPER)+" "+vals[1]
+    return vals[0]+" "+util.conv(val.op,mode=util.modes.EXPR)+" "+vals[1]
 
 
 def expr_ListComp(val:ast.ListComp):

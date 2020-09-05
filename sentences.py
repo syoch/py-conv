@@ -135,7 +135,7 @@ def sent_classdef(sentence:ast.ClassDef,f=""):
     return tmp
 
 def sent_augAssign(sentence:ast.AugAssign,f=""):
-    return util.conv(sentence.target,mode=util.modes.EXPR)+util.conv(sentence.op,mode=util.modes.OPER)+"="+util.conv(sentence.value,mode=util.modes.EXPR)
+    return util.conv(sentence.target,mode=util.modes.EXPR)+util.conv(sentence.op,mode=util.modes.EXPR)+"="+util.conv(sentence.value,mode=util.modes.EXPR)
 
 def sent_raise(sentence:ast.Raise,f=""):
     return "throw "+util.conv(sentence.exc,mode=util.modes.EXPR)
