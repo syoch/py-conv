@@ -1,0 +1,25 @@
+#pragma once
+#ifndef _OS_PATH_
+#define _OS_PATH_
+
+#include "base"
+
+class path
+{
+public:
+	path();
+	str _get_bothseps(str path);
+
+private:
+	str curdir;
+	str pardir;
+	str	extsep;
+	str sep;
+	str pathsep;
+	str altsep;
+	str defpath;
+	str devnull;
+};
+
+
+#endif // !_OS_PATH_
