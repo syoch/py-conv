@@ -4,7 +4,7 @@
 
 #include "base"
 
-class path
+class _path
 {
 public:
 	bool exists(Any path);
