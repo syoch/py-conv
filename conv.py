@@ -49,4 +49,4 @@ if __name__ == "__main__":
     while datamgr.have_data("srcs"):
         conv(os.path.relpath(datamgr.popleft("srcs")))
 
-[a+b for a in range(1,10) if a%2==0 for b in range(1,10) if a%2==1 ]
+[a+b for a in range(1,10) if a%2==0 for b in range(1,10) if b%2==1]
