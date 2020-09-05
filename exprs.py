@@ -90,13 +90,33 @@ def expr_joinedstr(val:ast.JoinedStr):
     return "".join([util.conv(a,util.modes.EXPR) for a in val.values])
 
 def expr_formattedvalue(val:ast.FormattedValue):
-    #FormattedValue(expr value, int? conversion, expr? format_spec)
     return (util.conv(val.value))
 
 def expr_BoolOp(val:ast.BoolOp):
-    #BoolOp(boolop op, expr* values)
     vals=[util.conv(a,mode=util.modes.EXPR) for a in val.values]
     return vals[0]+" "+util.conv(val.op,mode=util.modes.OPER)+" "+vals[1]
+
+
+def expr_ListComp(val:ast.ListComp):
+    tmp="Core::Proc_ListComp("
+    chars=", ".join([util.conv(gen.target,mode=util.modes.EXPR) for gen in val.generators])
+    tmp+=f"[]({chars})"
+    tmp+="{return "+util.conv(val.elt,mode=util.modes.EXPR)+";}, "
+    tmp+="{ "
+    for i,gen in enumerate(val.generators):
+        tmp+="{"
+        tmp+=str(i)+","
+        tmp+=util.conv(gen.iter,mode=util.modes.EXPR)
+        tmp+="},"
+    tmp+="},{"
+    for i,gen in enumerate(val.generators):
+        tmp+="{"
+        for cond in gen.ifs:
+            tmp+="[]("+util.conv(gen.target,mode=util.modes.EXPR)+"){return "+util.conv(cond,mode=util.modes.EXPR)+";}"
+        tmp+="}, "
+    tmp=tmp[:-2]
+    tmp+="});"
+    return tmp
 
 table={
     "arguments":expr_args,
@@ -115,5 +135,6 @@ table={
     "Dict":expr_dict,
     "JoinedStr":expr_joinedstr,
     "FormattedValue":expr_formattedvalue,
-    "BoolOp":expr_BoolOp
+    "BoolOp":expr_BoolOp,
+    "ListComp":expr_ListComp,
 }
