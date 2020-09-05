@@ -11,9 +11,9 @@ class Any: public std::any{
     using std::any::any;
 
     const char* toString(){
-        static const char* std::any_cast<str>(*this).c_str();
+        static const char* tmp = std::any_cast<str>(*this).c_str();
         return tmp;
     }
-}
+};
 
-#endif 
+#endif
