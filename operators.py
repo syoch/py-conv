@@ -9,5 +9,6 @@ table={
     "Mod":"%",
     "In":"in",
     "NotIn":"not in",
-    "And":"and"
+    "And":"and",
+    "USub":"-"
 }
