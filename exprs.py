@@ -83,7 +83,7 @@ def expr_dict(val:ast.Dict):
     tmp+="{"
     buf=[]
     for k,v in zip(val.keys,val.values):
-        buf.append("{"+util.conv(k,mode=util.modes.EXPR)+", "+util.conv(v,mode=util.modes.EXPR)+"},")
+        buf.append("{"+util.conv(k,mode=util.modes.EXPR)+", "+util.conv(v,mode=util.modes.EXPR)+"}")
     tmp+=",".join(buf)
     tmp+="}"
     return tmp
