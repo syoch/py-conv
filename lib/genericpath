@@ -8,6 +8,8 @@ class path
 {
 public:
 	bool exists(Any path);
+	bool isdir(Any path);
+	bool isfile(Any path);
 };
 
 #endif // !_OS_PATH_
