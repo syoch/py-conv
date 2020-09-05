@@ -2,6 +2,7 @@
 
 table={
     "Eq":"==",
+    "NotEq":"!=",
     "Not":"not",
     "Add":"+",
     "Div":"/",
