@@ -29,7 +29,7 @@ def conv(filename:str):
     if src_file in datamgr.get_dict("internal","converted"):
         datamgr.popleft("srcs")
         return
-    print("Converting",src_file,"->",dest_file)
+    print("Converting",os.path.relpath(src_file),"->",os.path.relpath(dest_file))
 
     os.chdir(os.path.dirname(src_file))
 
