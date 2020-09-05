@@ -13,7 +13,7 @@ def sent_import(sentence:ast.Import,f=""):
         if os.path.exists(name+".py"):
             tmp+=f+"#include \""+name+".cpp"+"\"\n"
             if not os.path.abspath(name+".py") in datamgr.get_dict("internal","converted"):
-                datamgr.push("srcs",os.path.abspath(name+".py"))
+                datamgr.queue.put("srcs",os.path.abspath(name+".py"))
         else:
             tmp+=f+"#include <"+name+">\n"
         if a.asname:
@@ -25,7 +25,7 @@ def sent_importfrom(sentence:ast.ImportFrom,f=""):
     name=sentence.module
     if os.path.exists(name+".py"):
         tmp+=f+"#include \""+name+".cpp"+"\"\n"
-        datamgr.push("srcs",os.path.abspath(name+".py"))
+        datamgr.queue.put("srcs",os.path.abspath(name+".py"))
     else:
         tmp+=f+"#include <"+name+">\n"
     for a in sentence.names:
@@ -43,6 +43,7 @@ def sent_funcdef(sentence:ast.FunctionDef,f=""):
         "}\n"
 
 def sent_ret(sentence:ast.Return,f=""):
+    
     return f+"return "+util.conv(sentence.value,mode=util.modes.EXPR)+";\n"
 
 def sent_assign(sentence:ast.Assign,f=""):
@@ -82,13 +83,13 @@ def sent_if(sentence:ast.If,f=""):
 
     tmp=""
     #If Block
-    tmp+=f+f"if({util.conv(sentence.test)}){{\n"
+    tmp+=f+f"if({util.conv(sentence.test,mode=util.modes.EXPR)}){{\n"
     tmp+=util.walk_shallow(sentence.body,f=f+"  ")
     tmp+=f+"}"
 
     #Elif Blocks
     for block in blocks:
-        tmp+=f"else if({util.conv(block.test)}){{\n"
+        tmp+=f"else if({util.conv(block.test,mode=util.modes.EXPR)}){{\n"
         tmp+=util.walk_shallow(block.body,f+"  ")
         tmp+=f+"}"
 
@@ -103,12 +104,12 @@ def sent_with(sentence:ast.With,f=""):
     tmp=""
     tmp+=f+"\n"
     for item in sentence.items:
-        tmp+=f+util.conv(item.optional_vars)+" = "+util.conv(item.context_expr,mode=util.modes.EXPR)+".__enter__();\n"
+        tmp+=f+util.conv(item.optional_vars,mode=util.modes.EXPR)+" = "+util.conv(item.context_expr,mode=util.modes.EXPR)+".__enter__();\n"
     
     tmp+=util.walk_shallow(sentence.body,f)
 
     for item in sentence.items:
-        tmp+=f+util.conv(item.optional_vars)+" = "+util.conv(item.context_expr,mode=util.modes.EXPR)+".__exit__(nullptr,nullptr,nullptr);\n"
+        tmp+=f+util.conv(item.optional_vars,mode=util.modes.EXPR)+" = "+util.conv(item.context_expr,mode=util.modes.EXPR)+".__exit__(nullptr,nullptr,nullptr);\n"
     tmp+=f+"\n"
     return tmp
 
@@ -127,7 +128,7 @@ def sent_classdef(sentence:ast.ClassDef,f=""):
     tmp+="}\n"
     
     decor_proc="_"+sentence.name
-    decors=[util.conv(a) for a in sentence.decorator_list]
+    decors=[util.conv(a,mode=util.modes.EXPR) for a in sentence.decorator_list]
     decors.reverse()
     for decor in decors:
         decor_proc=f"{decor}({decor_proc})"
@@ -136,13 +137,13 @@ def sent_classdef(sentence:ast.ClassDef,f=""):
     return tmp
 
 def sent_augAssign(sentence:ast.AugAssign,f=""):
-    return util.conv(sentence.target,mode=util.modes.EXPR)+util.conv(sentence.op,mode=util.modes.EXPR)+"="+util.conv(sentence.value,mode=util.modes.EXPR)
+    return f+util.conv(sentence.target,mode=util.modes.EXPR)+util.conv(sentence.op,mode=util.modes.EXPR)+"="+util.conv(sentence.value,mode=util.modes.EXPR)+";\n"
 
 def sent_raise(sentence:ast.Raise,f=""):
-    return "throw "+util.conv(sentence.exc,mode=util.modes.EXPR)
+    return f+"throw "+util.conv(sentence.exc,mode=util.modes.EXPR)+";\n"
     
 def sent_delete(sentence:ast.Delete,f=""):
-    return "delete" + ", ".join([util.conv(a,util.modes.EXPR) for a in sentence.targets])
+    return f+"delete" + ", ".join([util.conv(a,mode=util.modes.EXPR) for a in sentence.targets])+";\n"
 
 table={
     "Import":sent_import,
