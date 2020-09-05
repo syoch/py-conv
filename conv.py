@@ -49,20 +49,4 @@ if __name__ == "__main__":
     while datamgr.have_data("srcs"):
         conv(os.path.relpath(datamgr.popleft("srcs")))
 
-def a(a): # Test
-    if a==0:
-        print("a==0")
-    elif a==1:
-        print("a==1")
-    elif a==2:
-        print("a==2")
-    elif a==3:
-        print("a==3")
-    else:
-        print("else")
-
-    if a==4:
-        print("a==4")
-        if a/2==2:
-            print("a/2==2")
-    return None
+[a+b for a in range(1,10) if a%2==0 for b in range(1,10) if a%2==1 ]
