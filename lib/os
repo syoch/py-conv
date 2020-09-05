@@ -2,10 +2,7 @@
 #ifndef _OS_
 #define _OS_
 
-#ifdef WIN32
-#include "ntpath"
-#endif // WIN32
-
+#include "genericpath"
 #include "base"
 
 class os

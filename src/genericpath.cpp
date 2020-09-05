@@ -1,21 +1,15 @@
-#include "../lib/ntpath"
+#include "../lib/genericpath"
+#include <sys/stat.h>
+#include<iostream>
 
-path::path()
+bool path::exists(Any path)
 {
-	/*strings representing various path-related bits and pieces
-	* Should beprimarily for export; internally, they are hardcoded.
-	* These are set before imports for resolving cyclic dependency. */
-	curdir = ".";
-	pardir = "..";
-	extsep = ".";
-	sep = "\\";
-	pathsep = ";";
-	altsep = "/";
-	defpath = ".;C:\\bin";
-	devnull = "nul";
-}
-
-str path::_get_bothseps(str path)
-{
-	return "\\/";
+    struct stat st;
+    const char* file = std::any_cast<const char*>(path);
+    int ret = stat(file, &st);
+    if (ret == 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
