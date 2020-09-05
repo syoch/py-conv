@@ -3,7 +3,7 @@
 #define _OS_
 
 #ifdef WIN32
-	#include "ntpath"
+#include "ntpath"
 #endif // WIN32
 
 #include "base"
