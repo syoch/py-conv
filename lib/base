@@ -4,15 +4,15 @@
 
 #include <string>
 #include <any>
+#include <utility>
 
 #define str std::string
-
 class Any: public std::any{
     using std::any::any;
 
     const char* toString(){
-        static const char* tmp = std::any_cast<str>(*this).c_str();
-        return tmp;
+        static str tmp = std::any_cast<str>(*this);
+        return tmp.c_str();
     }
 };
 
