@@ -16,6 +16,7 @@ def conv(raw,f="",mode:modes=modes.BOTH):
         else:
             print("Unknown Expr Type "+typename)
             print(get("srcs"))
+            raise Exception()
             exit(0)
     elif mode==modes.SENT:
         if typename in sentences.table:

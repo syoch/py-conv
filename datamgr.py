@@ -85,4 +85,4 @@ def get_dict(name:str,key:str) ->None:
 def set_dict(name:str,key:str,value:Any) ->None:
     if name not in dict_table:
         raise f"dict `{name}` isn't defined"
-    dict_table[name][key]=Any
+    dict_table[name][key]=value
