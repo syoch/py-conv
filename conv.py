@@ -22,9 +22,9 @@ def conv(filename:str):
     """
     src_path=os.path.split(os.path.abspath(filename))[0]
     src_name=os.path.splitext(filename)[0]
-
     src_file=os.path.abspath(filename)
     dest_file=os.path.join(src_path,"dest",src_name+".cpp")
+    print("Converting",src_file,"->",dest_file)
 
     os.chdir(os.path.dirname(src_file))
 
