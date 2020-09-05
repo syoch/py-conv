@@ -1,63 +1,30 @@
-#include <direct.h>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <iostream>
+#pragma once
+#ifndef _OS_
+#define _OS_
 
-class os {
+#ifdef WIN32
+#include "ntpath"
+#endif // WIN32
+
+#include "base"
+
+class os
+{
 public:
-	void mkdir(const char* name, bool exist_ok);
-	void rmdir(const char* name);
-	void renames(const char* old, const char* _new);
+	path path;
+	void mkdir(Any name, bool exist_ok);
+	void rmdir(Any name);
+	void renames(Any old, Any _new);
 };
 
-class OSError {
+class OSError
+{
 private:
-	const char* msg;
+	Any msg;
+
 public:
-	OSError(const char* msg) : msg(msg) {}
-	const char* what() { return msg; }
+	OSError(Any msg) : msg(msg) {}
+	Any what() { return msg; }
 };
 
-
-void os::mkdir(const char* name, bool exist_ok = false)
-{
-	const char* dir = name;
-	struct stat statBuf;
-	int result = 1;
-	if (stat(dir, &statBuf) != 0) {
-		result = _mkdir(name);
-	} else if (exist_ok == true && stat(dir, &statBuf) == 0) {
-		result = _mkdir(name);
-	}
-	if (result == 1) {
-		throw OSError("Cannot rely on checking for EEXIST, since the operating system could give priority to other errors like EACCES or EROFS");
-	}
-}
-
-void os::rmdir(const char* name)
-{
-	int result = _rmdir(name);
-	if (result == 1) {
-		throw;
-	}
-}
-
-void os::renames(const char* old, const char* _new)
-{
-	os os;
-	struct stat statBuf;
-	if (stat(old, &statBuf) != 0) {
-		os.mkdir(_new);
-	} else {
-		if (rename(old, _new) != 0) {
-			return;
-		}
-	}
-	os.rmdir(old);
-}
-
-int main()
-{
-	os os;
-	os.renames("tes", "test");
-}
+#endif // !_OS_
