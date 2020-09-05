@@ -14,8 +14,7 @@
 #endif
 
 namespace platform{
-    int mkdir(Any _path){
-        const char* path=_path.toString();
+    int mkdir(const char* path){
         #if defined(WIN32)
             return ::_mkdir(path);
         #elif defined(POSIX)
@@ -25,8 +24,7 @@ namespace platform{
         #endif
     }
     
-    int rmdir(Any _path){
-        const char* path=_path.toString();
+    int rmdir(const char* path){
         #if defined(WIN32)
             return ::_rmdir(path);
         #elif defined(POSIX)
@@ -36,22 +34,22 @@ namespace platform{
         #endif
     }
 
-    bool exist(Any path){
+    bool exist(const char* path){
         #if defined(WIN32)
-            return PathFileExists(path.toString());
+            return PathFileExists(path);
         #elif defined(POSIX)
             struct ::stat buf;
-            return stat(path.toString(),&buf)!=-1;
+            return stat(path,&buf)!=-1;
         #else
             return false;
         #endif
     }
 
-    int rename(Any old,Any _new){
+    int rename(const char* old,const char* _new){
         #if defined(WIN32)
-            return ::rename(old.toString(),_new.toString());
+            return ::rename(old,_new);
         #elif defined(POSIX)
-            return ::rename(old.toString(),_new.toString());
+            return ::rename(old,_new);
         #else
             return -1;
         #endif

@@ -21,17 +21,19 @@ void os::mkdir(Any name, bool exist_ok = false)
 
 void os::rmdir(Any name)
 {
-	int result = platform::rmdir(name);
+	int result = platform::rmdir(name.toString());
 	if (result == 1) {
 		throw;
 	}
 }
 
-void os::renames(Any old, Any _new)
+void os::renames(Any _old, Any __new)
 {
+	const char* old=_old.toString();
+	const char* _new=__new.toString();
 	os os;
 	if (!platform::exist(old)) {
-		os.mkdir(_new);
+		platform::mkdir(_new);
 	} else {
 		if (platform::rename(old,_new) != 0) {
 			return;
