@@ -147,5 +147,6 @@ table={
     "FormattedValue":expr_formattedvalue,
     "BoolOp":expr_BoolOp,
     "ListComp":expr_ListComp,
-    "List":expr_list
+    "List":expr_list,
+    "Tuple":expr_list
 }
