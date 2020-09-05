@@ -118,6 +118,16 @@ def expr_ListComp(val:ast.ListComp):
     tmp+="});"
     return tmp
 
+def expr_list(val:ast.List):
+    tmp=""
+    tmp+="{"
+    for elt in val.elts:
+        tmp+=util.conv(elt,mode=util.modes.EXPR)
+        tmp+=", "
+    tmp=tmp[:-2]
+    tmp+="}"
+    return tmp
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -137,4 +147,5 @@ table={
     "FormattedValue":expr_formattedvalue,
     "BoolOp":expr_BoolOp,
     "ListComp":expr_ListComp,
+    "List":expr_list
 }
