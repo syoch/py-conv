@@ -1,0 +1,61 @@
+#ifndef __PLATFORM_FILE_H__
+#define __PLATFORM_FILE_H__
+
+#include "../base"
+#if defined(WIN32)
+ #include <direct.h>
+ #include <Shlwapi.h>
+ #pragma comment(lib, "Shlwapi.lib")
+#elif defined(POSIX)
+ #include <unistd.h>
+ #include <sys/stat.h>
+#else
+ #error "Unknown Platform"
+#endif
+
+namespace platform{
+    int mkdir(Any _path){
+        const char* path=_path.toString();
+        #if defined(WIN32)
+            return ::_mkdir(path);
+        #elif defined(POSIX)
+            return ::mkdir(path,644);
+        #else
+            return -1;
+        #endif
+    }
+    
+    int rmdir(Any _path){
+        const char* path=_path.toString();
+        #if defined(WIN32)
+            return ::_rmdir(path);
+        #elif defined(POSIX)
+            return ::rmdir(path);
+        #else
+            return -1;
+        #endif
+    }
+
+    bool exist(Any path){
+        #if defined(WIN32)
+            return PathFileExists(path.toString());
+        #elif defined(POSIX)
+            struct ::stat buf;
+            return stat(path.toString(),&buf)!=-1;
+        #else
+            return false;
+        #endif
+    }
+
+    int rename(Any old,Any _new){
+        #if defined(WIN32)
+            return ::rename(old.toString(),_new.toString());
+        #elif defined(POSIX)
+            return ::rename(old.toString(),_new.toString());
+        #else
+            return -1;
+        #endif
+    }
+}
+
+#endif // !__PLATFORM_FILE_H__
