@@ -7,6 +7,8 @@ def check():
     #Check dest Folder
     if not os.path.exists("dest/"):
         os.mkdir("dest")
+    datamgr.create_dict("internal")
+    datamgr.set_dict("internal","converted",set())
 
 def conv(filename:str):
     """
@@ -24,6 +26,9 @@ def conv(filename:str):
     src_name=os.path.splitext(filename)[0]
     src_file=os.path.abspath(filename)
     dest_file=os.path.join(src_path,"dest",src_name+".cpp")
+    if src_file in datamgr.get_dict("internal","converted"):
+        datamgr.popleft("srcs")
+        return
     print("Converting",src_file,"->",dest_file)
 
     os.chdir(os.path.dirname(src_file))
@@ -38,6 +43,8 @@ def conv(filename:str):
     for sentence in src.body:
         fp.write(util.conv(sentence,mode=util.modes.SENT))
     fp.close()
+    
+    datamgr.get_dict("internal","converted").add(src_file)
     datamgr.popleft("srcs")
 
 # +-----------------------+
