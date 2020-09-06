@@ -25,8 +25,8 @@ class dictmgr: # namespace
 
     @staticmethod
     def delete(name:str)->None:
-        if name in dictmgr.table:
-            raise Exception(f"{name} is already defined")
+        if name not in dictmgr.table:
+            raise Exception(f"{name} is not already defined")
         del dictmgr.table[name]
 
     @staticmethod
