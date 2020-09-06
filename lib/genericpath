@@ -5,7 +5,7 @@
 #include "base"
 //#include <vector>
 
-class path
+class _path
 {
 public:
 	bool exists(Any path);

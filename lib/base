@@ -2,14 +2,16 @@
 #ifndef __BASE_H__
 #define __BASE_H__
 
-#include <string>
-#include <any>
+#include <map>    // Dict
+#include <string> // str
+#include <any>    // Other
 #include <utility>
 
 #define str std::string
 class Any: public std::any{
     using std::any::any;
 
+public:
     const char* toString(){
         static str tmp = std::any_cast<str>(*this);
         return tmp.c_str();

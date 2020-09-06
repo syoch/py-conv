@@ -5,7 +5,7 @@
 #include <sstream>
 //#include <regex>
 
-bool path::exists(Any path)
+bool _path::exists(Any path)
 {
 	struct stat st;
 	const char* file = std::any_cast<const char*>(path);

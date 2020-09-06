@@ -12,7 +12,8 @@ def sent_import(sentence:ast.Import,f=""):
         name=a.name
         if os.path.exists(name+".py"):
             tmp+=f+"#include \""+name+".cpp"+"\"\n"
-            datamgr.push("srcs",os.path.abspath(name+".py"))
+            if not os.path.abspath(name+".py") in datamgr.get_dict("internal","converted"):
+                datamgr.push("srcs",os.path.abspath(name+".py"))
         else:
             tmp+=f+"#include <"+name+">\n"
         if a.asname:
@@ -56,7 +57,7 @@ def sent_assign(sentence:ast.Assign,f=""):
 
 def sent_for(sentence:ast.For,f=""):
     return \
-        f+"for ("+util.conv(sentence.target,mode=util.modes.EXPR)+" in "+util.conv(sentence.iter,util.modes.EXPR)+"){\n"+\
+        f+"for ("+util.conv(sentence.target,mode=util.modes.EXPR)+" in "+util.conv(sentence.iter,mode=util.modes.EXPR)+"){\n"+\
             util.walk_shallow(sentence.body,f+"  ")+\
         f+"}\n"
 
@@ -135,7 +136,7 @@ def sent_classdef(sentence:ast.ClassDef,f=""):
     return tmp
 
 def sent_augAssign(sentence:ast.AugAssign,f=""):
-    return util.conv(sentence.target,mode=util.modes.EXPR)+util.conv(sentence.op,mode=util.modes.OPER)+"="+util.conv(sentence.value,mode=util.modes.EXPR)
+    return util.conv(sentence.target,mode=util.modes.EXPR)+util.conv(sentence.op,mode=util.modes.EXPR)+"="+util.conv(sentence.value,mode=util.modes.EXPR)
 
 def sent_raise(sentence:ast.Raise,f=""):
     return "throw "+util.conv(sentence.exc,mode=util.modes.EXPR)

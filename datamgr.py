@@ -59,3 +59,30 @@ def get_val(name:str)->Any:
     if name not in values:
         raise Exception(f"{name} isn't defined")
     return values[name]
+
+#Dict
+dict_table={}
+def create_dict(name:str) -> None:
+    if name in dict_table:
+        raise f"dict `{name}` is already defined"
+    dict_table[name]={}
+
+def remove_dict(name:str) -> None:
+    if name not in dict_table:
+        raise f"dict `{name}` isn't defined"
+    del dict_table[name]
+
+def getobj_dict(name:str) ->None:
+    if name not in dict_table:
+        raise f"dict `{name}` isn't defined"
+    return dict_table[name]
+
+def get_dict(name:str,key:str) ->None:
+    if name not in dict_table:
+        raise f"dict `{name}` isn't defined"
+    return dict_table[name][key]
+
+def set_dict(name:str,key:str,value:Any) ->None:
+    if name not in dict_table:
+        raise f"dict `{name}` isn't defined"
+    dict_table[name][key]=value
