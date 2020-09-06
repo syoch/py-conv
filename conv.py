@@ -35,6 +35,7 @@ def conv(filename:str):
     else:
         #init storage
         datamgr.dictmgr.create("session")
+        datamgr.dictmgr.set("session","definedVariables",set())
         #Read  src(python)
         os.chdir(os.path.dirname(src_file))
         with open(src_file,"r") as fp:
