@@ -24,6 +24,12 @@ class dictmgr: # namespace
         dictmgr.table[name]={}
 
     @staticmethod
+    def delete(name:str)->None:
+        if name in dictmgr.table:
+            raise Exception(f"{name} is already defined")
+        del dictmgr.table[name]
+
+    @staticmethod
     def put(name:str,val:Any)->None:
         if name not in dictmgr.table:
             raise Exception(f"{name} is not already defined")
