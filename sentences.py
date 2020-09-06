@@ -40,7 +40,7 @@ def sent_funcdef(sentence:ast.FunctionDef,f=""):
     return \
         f+"Any "+sentence.name+"("+expr_args(sentence.args)+")"+"{\n"+\
             util.walk_shallow(body,f+"  ")+\
-        "}\n"
+        f+"}\n"
 
 def sent_ret(sentence:ast.Return,f=""):
     
@@ -120,9 +120,7 @@ def sent_classdef(sentence:ast.ClassDef,f=""):
     tmp+=f+"class _"+sentence.name
     if len(sentence.bases) != 0:
         tmp+=": "
-    for base in sentence.bases:
-        tmp+="public "+util.conv(base,mode=util.modes.EXPR)+", "
-    tmp=tmp[:-2]
+    tmp+=", ".join(["public "+util.conv(base,mode=util.modes.EXPR) for base in sentence.bases])
     tmp+="\n"
     tmp+="{\n"
 
