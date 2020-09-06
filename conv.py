@@ -33,6 +33,8 @@ def conv(filename:str):
     if src_file in datamgr.dictmgr.get("internal","converted"):
         print("Already converted |")
     else:
+        #init storage
+        datamgr.dictmgr.create("session")
         #Read  src(python)
         os.chdir(os.path.dirname(src_file))
         with open(src_file,"r") as fp:
@@ -43,7 +45,8 @@ def conv(filename:str):
         for sentence in src.body:
             fp.write(util.conv(sentence,mode=util.modes.SENT))
         fp.close()
-
+        
+        datamgr.dictmgr.delete("session")
         print("done              |")
     
     datamgr.dictmgr.get("internal","converted").add(src_file)
