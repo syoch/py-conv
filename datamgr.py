@@ -15,55 +15,62 @@ def get_val(name:str)->Any:
 
 #Dict
 dict_table={}
-def create_dict(name:str) -> None:
-    if name in dict_table:
-        raise f"dict `{name}` is already defined"
-    dict_table[name]={}
-
-def remove_dict(name:str) -> None:
-    if name not in dict_table:
-        raise f"dict `{name}` isn't defined"
-    del dict_table[name]
-
-def getobj_dict(name:str) ->None:
-    if name not in dict_table:
-        raise f"dict `{name}` isn't defined"
-    return dict_table[name]
-
-def get_dict(name:str,key:str) ->None:
-    if name not in dict_table:
-        raise f"dict `{name}` isn't defined"
-    return dict_table[name][key]
-
-def set_dict(name:str,key:str,value:Any) ->None:
-    if name not in dict_table:
-        raise f"dict `{name}` isn't defined"
-    dict_table[name][key]=value
-
-# queue
-from collections import deque
-class queue: # namespace
+class dictmgr: # namespace
     table={}
     @staticmethod
     def create(name:str)->None:
-        if name in queue.table:
+        if name in dictmgr.table:
             raise Exception(f"{name} is already defined")
-        queue.table[name]=deque()
+        dictmgr.table[name]={}
 
     @staticmethod
     def put(name:str,val:Any)->None:
-        if name not in queue.table:
+        if name not in dictmgr.table:
             raise Exception(f"{name} is not already defined")
-        queue.table[name].append(val)
+        dictmgr.table[name].append(val)
+
+    @staticmethod
+    def getobj(name:str)->Any:
+        if name not in dictmgr.table:
+            raise Exception(f"{name} is not already defined")
+        return dictmgr.table[name]
+
+    @staticmethod
+    def get(name:str,key:str)->Any:
+        if name not in dictmgr.table:
+            raise Exception(f"{name} is not already defined")
+        return dictmgr.table[name][key]
+    
+    @staticmethod
+    def set(name:str,key:str,value:Any)->Any:
+        if name not in dictmgr.table:
+            raise Exception(f"{name} is not already defined")
+        dictmgr.table[name][key]=value
+
+# queue
+from collections import deque
+class queuemgr: # namespace
+    table={}
+    @staticmethod
+    def create(name:str)->None:
+        if name in queuemgr.table:
+            raise Exception(f"{name} is already defined")
+        queuemgr.table[name]=deque()
+
+    @staticmethod
+    def put(name:str,val:Any)->None:
+        if name not in queuemgr.table:
+            raise Exception(f"{name} is not already defined")
+        queuemgr.table[name].append(val)
 
     @staticmethod
     def get(name:str)->Any:
-        if name not in queue.table:
+        if name not in queuemgr.table:
             raise Exception(f"{name} is not already defined")
-        return queue.table[name].popleft()
+        return queuemgr.table[name].popleft()
     
     @staticmethod
     def empty(name:str) -> Any:
-        if name not in queue.table:
+        if name not in queuemgr.table:
             raise Exception(f"{name} is not already defined")
-        return len(queue.table[name])==0
+        return len(queuemgr.table[name])==0

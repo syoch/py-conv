@@ -7,9 +7,9 @@ def check():
     #Check dest Folder
     if not os.path.exists("dest/"):
         os.mkdir("dest")
-    datamgr.queue.create("srcs")
-    datamgr.create_dict("internal")
-    datamgr.set_dict("internal","converted",set())
+    datamgr.queuemgr.create("srcs")
+    datamgr.dictmgr.create("internal")
+    datamgr.dictmgr.set("internal","converted",set())
 
 def conv(filename:str):
     """
@@ -30,23 +30,23 @@ def conv(filename:str):
     dest_file=os.path.join(src_path,"dest",src_name+".cpp")
     print(os.path.relpath(src_file).ljust(25)+"|","->",os.path.relpath(dest_file).ljust(25+5)+"| ",end="... ",flush=True)
     
-    if src_file in datamgr.get_dict("internal","converted"):
+    if src_file in datamgr.dictmgr.get("internal","converted"):
         print("Already converted |")
     else:
+        #Read  src(python)
         os.chdir(os.path.dirname(src_file))
-
         with open(src_file,"r") as fp:
             src=ast.parse(fp.read(),src_file)
-
-
+        #Write src(C++)
         fp=open(dest_file,"w")
         fp.write("#include <base>\n")
         for sentence in src.body:
             fp.write(util.conv(sentence,mode=util.modes.SENT))
         fp.close()
+
         print("done              |")
     
-    datamgr.get_dict("internal","converted").add(src_file)
+    datamgr.dictmgr.get("internal","converted").add(src_file)
     
 
 # +-----------------------+
@@ -55,5 +55,5 @@ def conv(filename:str):
 if __name__ == "__main__":
     check()
     conv("conv.py")
-    while not datamgr.queue.empty("srcs"):
-        conv(datamgr.queue.get("srcs"))
+    while not datamgr.queuemgr.empty("srcs"):
+        conv(datamgr.queuemgr.get("srcs"))
