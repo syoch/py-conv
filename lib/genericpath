@@ -3,6 +3,7 @@
 #define _OS_PATH_
 
 #include "base"
+//#include <vector>
 
 class path
 {
@@ -10,6 +11,7 @@ public:
 	bool exists(Any path);
 	bool isdir(Any path);
 	bool isfile(Any path);
+	//std::vector<std::string> split(Any path);
 };
 
 #endif // !_OS_PATH_
