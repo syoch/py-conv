@@ -28,7 +28,7 @@ def conv(filename:str):
     src_name=os.path.splitext(os.path.basename(filename))[0]
     src_file=os.path.abspath(filename)
     dest_file=os.path.join(src_path,"dest",src_name+".cpp")
-    print(os.path.relpath(src_file).ljust(25)+"|","->",os.path.relpath(dest_file).ljust(25+5)+"| ",end="... ",flush=True)
+    print(os.path.relpath(src_file).ljust(25)+"|",os.path.relpath(dest_file).ljust(25+5)+"| ",end="",flush=True)
     
     if src_file in datamgr.dictmgr.get("internal","converted"):
         print("Already converted |")
