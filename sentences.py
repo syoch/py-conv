@@ -60,7 +60,7 @@ def sent_assign(sentence:ast.Assign,f=""):
 
 def sent_for(sentence:ast.For,f=""):
     return \
-        f+"for ("+util.conv(sentence.target,mode=util.modes.EXPR)+" in "+util.conv(sentence.iter,mode=util.modes.EXPR)+"){\n"+\
+        f+"for ("+util.conv(sentence.target,mode=util.modes.EXPR)+" : "+util.conv(sentence.iter,mode=util.modes.EXPR)+"){\n"+\
             util.walk_shallow(sentence.body,f+"  ")+\
         f+"}\n"
 
