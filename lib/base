@@ -7,6 +7,8 @@
 #include <any>    // Other
 #include <utility>
 
+#include <iostream>
+
 #define str std::string
 class Any: public std::any{
     using std::any::any;
@@ -26,6 +28,23 @@ public:
     const char* toString(){
         static str tmp = toStr();
         return tmp.c_str();
+    }
+    str replace(str from,str to){
+        str tmp;
+        str src=toStr();
+        int srclen=src.length();
+        int fromlen=from.length();
+        
+        for(int i=0; i<srclen; i++){
+            if(src.substr(i,fromlen)==from){
+                tmp+=to;
+                i+=fromlen-1;
+            }else{
+                tmp+=src[i];
+            }
+        }
+
+        return tmp;
     }
 };
 
