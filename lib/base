@@ -55,6 +55,9 @@ public:
 
         return Any(tmp);
     }
+    Any replace(Any from,Any to){
+        return replace(from.toStr(),to.toStr());
+    }
 };
 
 #endif
