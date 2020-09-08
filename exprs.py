@@ -88,7 +88,7 @@ def expr_dict(val:ast.Dict):
         values.append(util.conv(v,mode=util.modes.EXPR))
     tmp+="{"+",".join(keys)+"}"
     tmp+=", "
-    tmp+="{"+",".join(values)+"}+"
+    tmp+="{"+",".join(values)+"}"
     tmp+=")"
     return tmp
 
