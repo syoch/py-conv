@@ -136,7 +136,7 @@ table={
     "arg":expr_arg,
     "Attribute":expr_attr,
     "Name":expr_name,
-    "Constant":lambda x:util.conv(x.value,mode=util.modes.EXPR),
+    "Constant":lambda x:"Any("+util.conv(x.value,mode=util.modes.EXPR)+")",
     "Call":expr_call,
     "Compare":expr_comp,
     "UnaryOp":expr_UnaryOp,
