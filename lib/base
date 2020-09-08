@@ -12,8 +12,19 @@ class Any: public std::any{
     using std::any::any;
 
 public:
+    str toStr(){
+        if(type() == typeid(str)){
+            return std::any_cast<str>(*this);
+        }else if(type() == typeid(char*)){
+            return str(std::any_cast<char*>(*this));
+        }else if(type() == typeid(const char*)){
+            return str(std::any_cast<const char*>(*this));
+        }else{
+            throw str("Unknown Type")+str(type().name());
+        }
+    }
     const char* toString(){
-        static str tmp = std::any_cast<str>(*this);
+        static str tmp = toStr();
         return tmp.c_str();
     }
 };
