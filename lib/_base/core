@@ -1,11 +1,11 @@
 #pragma once
 
 #include "base"
-#include <vector>
+#include <initializer_list>
 
 namespace Core
 {
-    dict make_dict(str keys[],str values[]){
+    dict make_dict(std::initializer_list<Any> keys[],std::initializer_list<Any> values[]){
         dict ret;
         
         return ret;

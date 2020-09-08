@@ -86,9 +86,9 @@ def expr_dict(val:ast.Dict):
     for k,v in zip(val.keys,val.values):
         keys.append(util.conv(k,mode=util.modes.EXPR))
         values.append(util.conv(v,mode=util.modes.EXPR))
-    tmp+="(Any[]){"+",".join(keys)+"}"
+    tmp+="{"+",".join(keys)+"}"
     tmp+=", "
-    tmp+="(Any[]){"+",".join(values)+"}"
+    tmp+="{"+",".join(values)+"}"
     tmp+=")"
     return tmp
 
