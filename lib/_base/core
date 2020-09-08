@@ -1,7 +1,13 @@
 #pragma once
 
 #include "base"
+#include <vector>
 
 namespace Core
 {
+    dict make_dict(str ...keys,str ...values){
+        dict ret;
+        
+        return ret;
+    }
 } // namespace core
