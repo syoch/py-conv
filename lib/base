@@ -9,7 +9,16 @@
 
 #include <iostream>
 
-#define str std::string
+#define dict std::map<str,Any>
+
+class Any;
+
+class str: public std::string{
+    using std::string::string;
+public:
+    str(Any& obj): str(obj.toStr()){}
+};
+
 class Any: public std::any{
     using std::any::any;
 
