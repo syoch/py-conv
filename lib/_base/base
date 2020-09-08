@@ -16,6 +16,7 @@ class Any: public std::any{
 public:
     Any(str& obj);
     str toStr();
+    int toInt();
     const char* toString();
     Any replace(str from,str to);
     Any replace(Any from,Any to);
@@ -46,6 +47,14 @@ str Any::toStr(){
         return str(std::any_cast<char*>(*this));
     }else if(type() == typeid(const char*)){
         return str(std::any_cast<const char*>(*this));
+    }else{
+        throw str("Unknown Type")+str(type().name());
+    }
+}
+
+int Any::toInt(){
+    if(type() == typeid(int)){
+        return std::any_cast<int>(*this);
     }else{
         throw str("Unknown Type")+str(type().name());
     }
