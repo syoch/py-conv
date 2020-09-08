@@ -7,9 +7,10 @@
 #include <any>    // Other
 #include <utility>// Other
 
-#define dict std::map<str,Any>
+#define dict std::map<Any,Any>
 
 class Any;
+str Any::toStr();
 
 class str: public std::string{
     using std::string::string;
@@ -59,7 +60,7 @@ public:
 
     Any operator+(Any target){
         if(type() != target.type()){
-            throw std::string("Not Supported Add (")+type()+std::string(", ")+target.type()+std::string(")");
+            throw std::string("Not Supported Add (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
         }
         if(type() == typeid(str)){}
     }
