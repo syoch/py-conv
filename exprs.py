@@ -80,12 +80,16 @@ def expr_lambda(val:ast.Lambda):
 
 def expr_dict(val:ast.Dict):
     tmp=""
-    tmp+="std::map({"
-    buf=[]
+    tmp+="Core::make_dict("
+    keys=[]
+    values=[]
     for k,v in zip(val.keys,val.values):
-        buf.append("{"+util.conv(k,mode=util.modes.EXPR)+", "+util.conv(v,mode=util.modes.EXPR)+"}")
-    tmp+=",".join(buf)
-    tmp+="})"
+        keys.append(util.conv(k,mode=util.modes.EXPR))
+        values.append(util.conv(v,mode=util.modes.EXPR))
+    tmp+="{"+",".join(keys)+"}"
+    tmp+=", "
+    tmp+="{"+",".join(values)+"}+"
+    tmp+=")"
     return tmp
 
 def expr_joinedstr(val:ast.JoinedStr):
