@@ -14,18 +14,29 @@ class str;
 class Any: public std::any{
     using std::any::any;
 public:
+    Any(str& obj);
     str toStr();
     const char* toString();
     Any replace(str from,str to);
     Any replace(Any from,Any to);
     Any operator+(Any target);
+    bool operator<(const Any target);
 };
-
 class str: public std::string{
     using std::string::string;
 public:
-    str(Any& obj): str(obj.toStr()){}
+    str(Any& obj);
+    str(Any obj);
+    const char* CPC();
 };
+
+str::str(Any& obj): str(obj.toStr()){}
+str::str(Any  obj): str(obj.toStr()){}
+Any::Any(str& obj): Any(obj.CPC()){}
+
+const char* str::CPC(){
+    return c_str();
+}
 
 str Any::toStr(){
     if(type() == typeid(str)){
@@ -38,10 +49,12 @@ str Any::toStr(){
         throw str("Unknown Type")+str(type().name());
     }
 }
+
 const char* Any::toString(){
     static str tmp = toStr();
     return tmp.c_str();
 }
+
 Any Any::replace(str from,str to){
     str tmp;
     str src=toStr();
@@ -58,9 +71,11 @@ Any Any::replace(str from,str to){
     }
     return Any(tmp);
 }
+
 Any Any::replace(Any from,Any to){
     return replace(from.toStr(),to.toStr());
 }
+
 Any Any::operator+(Any target){
     if(type() != target.type()){
         throw std::string("Not Supported Add (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
@@ -71,5 +86,6 @@ Any Any::operator+(Any target){
         throw std::string("Not Supported Add (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
     }
 }
+
 
 #endif
