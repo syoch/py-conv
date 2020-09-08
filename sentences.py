@@ -43,7 +43,6 @@ def sent_funcdef(sentence:ast.FunctionDef,f=""):
         f+"}\n"
 
 def sent_ret(sentence:ast.Return,f=""):
-    
     return f+"return "+util.conv(sentence.value,mode=util.modes.EXPR)+";\n"
 
 def sent_assign(sentence:ast.Assign,f=""):
