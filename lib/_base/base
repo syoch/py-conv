@@ -9,21 +9,24 @@
 
 #define dict std::map<Any,Any>
 
+class str;
+
+class Any: public std::any{
+    using std::any::any;
+public:
+    str toStr();
+    const char* toString();
+    Any replace(str from,str to);
+    Any replace(Any from,Any to);
+    Any operator+(Any target);
+};
+
 class str: public std::string{
     using std::string::string;
 public:
     str(Any& obj): str(obj.toStr()){}
 };
 
-class Any: public std::any{
-    using std::any::any;
-    Any(str& obj): Any(obj){}
-    str toStr();
-    const char* toString();
-    Any replace(str from,str to);
-    Any replace(Any from,Any to);
-    Any operator+(Any target);
-}
 str Any::toStr(){
     if(type() == typeid(str)){
         return std::any_cast<str>(*this);
@@ -62,7 +65,11 @@ Any Any::operator+(Any target){
     if(type() != target.type()){
         throw std::string("Not Supported Add (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
     }
-    if(type() == typeid(str)){}
+    if(type() == typeid(str)){
+        return toStr()+target.toStr();
+    }else{
+        throw std::string("Not Supported Add (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
+    }
 }
 
 #endif
