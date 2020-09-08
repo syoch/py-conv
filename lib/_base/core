@@ -1,0 +1,7 @@
+#pragma once
+
+#include "base"
+
+namespace Core
+{
+} // namespace core
