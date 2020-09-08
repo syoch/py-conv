@@ -21,6 +21,7 @@ public:
     Any replace(Any from,Any to);
     Any operator+(Any target);
     bool operator<(const Any target);
+    bool operator>(const Any target);
 };
 class str: public std::string{
     using std::string::string;
@@ -87,5 +88,26 @@ Any Any::operator+(Any target){
     }
 }
 
+bool Any::operator<(const Any target){
+    if(type() != target.type()){
+        throw std::string("Not Supported operator< (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
+    }
+    if(type() == typeid(int)){
+        return toInt()<target.toInt();
+    }else{
+        throw std::string("Not Supported operator< (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
+    }
+}
+
+bool Any::operator>(const Any target){
+    if(type() != target.type()){
+        throw std::string("Not Supported operator> (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
+    }
+    if(type() == typeid(int)){
+        return toInt()>target.toInt();
+    }else{
+        throw std::string("Not Supported operator> (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
+    }
+}
 
 #endif

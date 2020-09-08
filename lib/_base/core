@@ -5,7 +5,7 @@
 
 namespace Core
 {
-    dict make_dict(std::initializer_list<Any> keys[],std::initializer_list<Any> values[]){
+    dict make_dict(std::initializer_list<Any> keys,std::initializer_list<Any> values){
         dict ret;
         
         return ret;
