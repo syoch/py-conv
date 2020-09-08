@@ -9,9 +9,6 @@
 
 #define dict std::map<Any,Any>
 
-class Any;
-str Any::toStr();
-
 class str: public std::string{
     using std::string::string;
 public:
@@ -20,50 +17,52 @@ public:
 
 class Any: public std::any{
     using std::any::any;
-
-public:
-    str toStr(){
-        if(type() == typeid(str)){
-            return std::any_cast<str>(*this);
-        }else if(type() == typeid(char*)){
-            return str(std::any_cast<char*>(*this));
-        }else if(type() == typeid(const char*)){
-            return str(std::any_cast<const char*>(*this));
+    Any(str& obj): Any(obj){}
+    str toStr();
+    const char* toString();
+    Any replace(str from,str to);
+    Any replace(Any from,Any to);
+    Any operator+(Any target);
+}
+str Any::toStr(){
+    if(type() == typeid(str)){
+        return std::any_cast<str>(*this);
+    }else if(type() == typeid(char*)){
+        return str(std::any_cast<char*>(*this));
+    }else if(type() == typeid(const char*)){
+        return str(std::any_cast<const char*>(*this));
+    }else{
+        throw str("Unknown Type")+str(type().name());
+    }
+}
+const char* Any::toString(){
+    static str tmp = toStr();
+    return tmp.c_str();
+}
+Any Any::replace(str from,str to){
+    str tmp;
+    str src=toStr();
+    int srclen=src.length();
+    int fromlen=from.length();
+    
+    for(int i=0; i<srclen; i++){
+        if(src.substr(i,fromlen)==from){
+            tmp+=to;
+            i+=fromlen-1;
         }else{
-            throw str("Unknown Type")+str(type().name());
+            tmp+=src[i];
         }
     }
-    const char* toString(){
-        static str tmp = toStr();
-        return tmp.c_str();
+    return Any(tmp);
+}
+Any Any::replace(Any from,Any to){
+    return replace(from.toStr(),to.toStr());
+}
+Any Any::operator+(Any target){
+    if(type() != target.type()){
+        throw std::string("Not Supported Add (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
     }
-    Any replace(str from,str to){
-        str tmp;
-        str src=toStr();
-        int srclen=src.length();
-        int fromlen=from.length();
-        
-        for(int i=0; i<srclen; i++){
-            if(src.substr(i,fromlen)==from){
-                tmp+=to;
-                i+=fromlen-1;
-            }else{
-                tmp+=src[i];
-            }
-        }
-
-        return Any(tmp);
-    }
-    Any replace(Any from,Any to){
-        return replace(from.toStr(),to.toStr());
-    }
-
-    Any operator+(Any target){
-        if(type() != target.type()){
-            throw std::string("Not Supported Add (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
-        }
-        if(type() == typeid(str)){}
-    }
-};
+    if(type() == typeid(str)){}
+}
 
 #endif
