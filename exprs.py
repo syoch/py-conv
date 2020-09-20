@@ -109,7 +109,7 @@ def expr_BoolOp(val:ast.BoolOp):
 
 
 def expr_ListComp(val:ast.ListComp):
-    tmp="Core::Proc_ListComp("
+    tmp="Core::ListComp("
     chars=", ".join([util.conv(gen.target,mode=util.modes.EXPR) for gen in val.generators])
     tmp+=f"[]({chars})"
     tmp+="{return "+util.conv(val.elt,mode=util.modes.EXPR)+";}, "
@@ -165,6 +165,10 @@ def expr_DictComp(val:ast.DictComp):
     s+=")"
     return s
 
+def expr_set(val:ast.Set):
+    vals=[util.conv(a,mode=util.modes.EXPR) for a in val.elts]
+    return "["+",".join(vals)+"]"
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -191,4 +195,5 @@ table={
     "GeneratorExp":expr_ListComp,
     "NamedExpr":expr_NamedExpr,
     "DictComp":expr_DictComp,
+    "Set":expr_set
 }
