@@ -164,5 +164,6 @@ table={
     "List":expr_list,
     "Tuple":expr_list,
     "IfExp":expr_ifexp,
-    "Starred":expr_starred
+    "Starred":expr_starred,
+    "GeneratorExp":expr_ListComp
 }
