@@ -1,0 +1,14 @@
+#pragma once
+#ifndef __STR__
+#define __STR__
+
+#include "Any"
+
+class str : public std::string
+{
+    using std::string::string;
+public:
+    str(Any &obj) : str("hi") {}
+};
+
+#endif

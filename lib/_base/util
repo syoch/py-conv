@@ -1,0 +1,19 @@
+#pragma once
+#ifndef __UTIL__
+#define __UTIL__
+
+class Any;
+
+namespace Core
+{
+    namespace Util
+    {
+        template <typename T = int>
+        T add(const ::Any &a, const ::Any &b)
+        {
+            return std::any_cast<T>(a) + std::any_cast<T>(b);
+        }
+    } // namespace Util
+} // namespace Core
+
+#endif

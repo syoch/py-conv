@@ -1,0 +1,89 @@
+#pragma once
+#ifndef __ANY__
+#define __ANY__
+
+#include <any>
+#include <iostream>
+#include <string>
+#include "util"
+
+class Any
+{
+public:
+    std::any val;
+
+    template <typename T> Any(T val) {
+        this->val = val;
+    }
+
+    Any() {
+        this->val = 0;
+    }
+
+    Any replace(Any from, Any to) { return this; }
+
+    template <typename T> inline T cast() const{
+        return std::any_cast<T>(val);
+    }
+    template <typename T> inline std::size_t hash() const{
+        return std::hash<T>()(cast<T>());
+    }
+};
+
+bool operator<(const Any &a,const Any &b){
+    if (a.val.type() == b.val.type())
+        if (a.val.type() == typeid(std::string))
+            return a.cast<std::string>() < b.cast<std::string>();
+        else if (a.val.type() == typeid(const char*))
+            return std::string(a.cast<const char*>()) < std::string(b.cast<const char*>());
+        else
+            throw "aaa";
+    else
+        throw "aaa";
+}
+
+Any  operator+ (const Any &a, const Any &b){
+    if (a.val.type() == b.val.type())
+    {
+        if (a.val.type() == typeid(std::string))
+            return Core::Util::add<std::string>(a, b);
+        else if (a.val.type() == typeid(const char*))
+            return Core::Util::add<std::string>(std::string(a.cast<const char*>()),std::string(b.cast<const char*>()));
+        else if (a.val.type() == typeid(char*))
+            return Core::Util::add<std::string>(std::string(a.cast<char*>()),std::string(a.cast<char*>()));
+        else if (a.val.type() == typeid(Any))
+            return Core::Util::add<Any>(a,b);
+        else
+        {
+            throw "aaa";
+        }
+    }
+    else
+    {
+        throw "aaa";
+    }
+}
+
+bool operator==(const Any &a, const Any &b)  {
+    return !(a.val<b.val) || !(b.val<a.val);
+}
+
+std::ostream &operator<<(std::ostream &st, const Any &obj)
+{
+    st<<"Any(";
+    if (obj.val.type() == typeid(std::string))
+        st <<"   s:"<<std::any_cast<std::string>(obj.val);
+    else if (obj.val.type() == typeid(const char*))
+        st <<" ccp:"<<std::any_cast<const char*>(obj.val);
+    else if (obj.val.type() == typeid(char*))
+        st <<"  cp:"<<std::any_cast<char*>(obj.val);
+    else if (obj.val.type() == typeid(Any))
+        st <<"   A:"<< obj.val;
+    else
+        st <<obj.val.type().name();
+    st<<")";
+    return st;
+}
+
+
+#endif

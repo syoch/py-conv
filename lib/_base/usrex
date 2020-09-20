@@ -1,0 +1,30 @@
+#pragma once
+#ifndef __EX_STD__
+#define __EX_STD__
+
+#include <any>
+#include <map> // for hash
+
+namespace std{
+    template<>
+    class hash<Any>
+    {
+    public:
+
+        hash(){}
+        std::size_t operator()(const ::Any &a) const
+        {
+            if(a.val.type() == typeid(std::string)){
+                return a.hash<std::string>();
+            }else if(a.val.type() == typeid(char*)){
+                return a.hash<char*>();
+            }else if(a.val.type() == typeid(char const*)){
+                return a.hash<char const*>();
+            }else{
+                throw "Unknown Type";
+            }
+        }
+    };
+}
+
+#endif

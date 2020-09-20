@@ -1,122 +1,28 @@
 #pragma once
-#ifndef __BASE_H__
-#define __BASE_H__
+#ifndef __BASE_ANY__
+#define ___BASE_ANY__
 
-#include <map>    // Dict
-#include <string> // str
-#include <any>    // Other
-#include <utility>// Other
+#include <any>
+#include <map>
+#include "util"
+#include "Any"
+#include "str"
+#include "usrex"
 
-#define dict std::map<Any,Any>
+using dict = std::map<Any, Any>;
 
-class str;
-
-class Any: public std::any{
-    using std::any::any;
-public:
-    Any(str& obj);
-    str toStr();
-    int toInt();
-    const char* toString();
-    Any replace(str from,str to);
-    Any replace(Any from,Any to);
-    Any operator+(Any target);
-    bool operator<(const Any target);
-    bool operator>(const Any target);
-};
-class str: public std::string{
-    using std::string::string;
-public:
-    str(Any& obj);
-    str(Any obj);
-    const char* CPC();
-};
-
-str::str(Any& obj): str(obj.toStr()){}
-str::str(Any  obj): str(obj.toStr()){}
-Any::Any(str& obj): Any(obj.CPC()){}
-
-const char* str::CPC(){
-    return c_str();
-}
-
-str Any::toStr(){
-    if(type() == typeid(str)){
-        return std::any_cast<str>(*this);
-    }else if(type() == typeid(char*)){
-        return str(std::any_cast<char*>(*this));
-    }else if(type() == typeid(const char*)){
-        return str(std::any_cast<const char*>(*this));
-    }else{
-        throw str("Unknown Type")+str(type().name());
-    }
-}
-
-int Any::toInt(){
-    if(type() == typeid(int)){
-        return std::any_cast<int>(*this);
-    }else{
-        throw str("Unknown Type")+str(type().name());
-    }
-}
-
-const char* Any::toString(){
-    static str tmp = toStr();
-    return tmp.c_str();
-}
-
-Any Any::replace(str from,str to){
-    str tmp;
-    str src=toStr();
-    int srclen=src.length();
-    int fromlen=from.length();
-    
-    for(int i=0; i<srclen; i++){
-        if(src.substr(i,fromlen)==from){
-            tmp+=to;
-            i+=fromlen-1;
-        }else{
-            tmp+=src[i];
+namespace Core
+{
+    Any make_dict(std::initializer_list<Any> keys, std::initializer_list<Any> values)
+    {
+        dict ret;
+        std::size_t valCount=keys.size();
+        auto keysArray=keys.begin();
+        auto valuesArray=values.begin();
+        for(std::size_t i=0;i<valCount;i++){
+            ret[keysArray[i]]=valuesArray[i];
         }
+        return Any(ret);
     }
-    return Any(tmp);
-}
-
-Any Any::replace(Any from,Any to){
-    return replace(from.toStr(),to.toStr());
-}
-
-Any Any::operator+(Any target){
-    if(type() != target.type()){
-        throw std::string("Not Supported Add (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
-    }
-    if(type() == typeid(str)){
-        return toStr()+target.toStr();
-    }else{
-        throw std::string("Not Supported Add (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
-    }
-}
-
-bool Any::operator<(const Any target){
-    if(type() != target.type()){
-        throw std::string("Not Supported operator< (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
-    }
-    if(type() == typeid(int)){
-        return toInt()<target.toInt();
-    }else{
-        throw std::string("Not Supported operator< (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
-    }
-}
-
-bool Any::operator>(const Any target){
-    if(type() != target.type()){
-        throw std::string("Not Supported operator> (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
-    }
-    if(type() == typeid(int)){
-        return toInt()>target.toInt();
-    }else{
-        throw std::string("Not Supported operator> (")+type().name()+std::string(", ")+target.type().name()+std::string(")");
-    }
-}
-
+} // namespace Core
 #endif

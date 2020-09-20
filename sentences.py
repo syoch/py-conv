@@ -53,8 +53,10 @@ def sent_assign(sentence:ast.Assign,f=""):
         if util.conv(target,mode=util.modes.EXPR) not in datamgr.dictmgr.get("session","definedVariables"):
             ret+="Any "
         ret+=util.conv(target,mode=util.modes.EXPR)
-        ret+=" = "
-        ret+=value+"["+str(i)+"]"+";\n"
+        ret+=" = "+value
+        if len(sentence.targets)!=1:
+            ret+="["+str(i)+"]"
+        ret+=";\n"
     return ret
 
 def sent_for(sentence:ast.For,f=""):
