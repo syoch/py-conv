@@ -16,9 +16,10 @@ table={
     "BitAnd":"&",
     "Lt":"<",
     "Gt":">",
-    "GtE":"<=",
+    "GtE":">=",
     "Or":"or",
     "BitOr":"|",
     "IsNot":"!=",
-    "FloorDiv":"//"
+    "FloorDiv":"//",
+    "LtE":"<="
 }
