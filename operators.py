@@ -22,5 +22,6 @@ table={
     "IsNot":"!=",
     "FloorDiv":"//",
     "LtE":"<=",
-    "Is":"=="
+    "Is":"==",
+    "UAdd":"+"
 }
