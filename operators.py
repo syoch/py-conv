@@ -18,5 +18,6 @@ table={
     "Gt":">",
     "GtE":"<=",
     "Or":"or",
-    "BitOr":"|"
+    "BitOr":"|",
+    "IsNot":"!="
 }
