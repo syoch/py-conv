@@ -109,7 +109,7 @@ def expr_BoolOp(val:ast.BoolOp):
 
 
 def expr_ListComp(val:ast.ListComp):
-    tmp="Core::ListComp("
+    tmp="Core::Proc_ListComp("
     chars=", ".join([util.conv(gen.target,mode=util.modes.EXPR) for gen in val.generators])
     tmp+=f"[]({chars})"
     tmp+="{return "+util.conv(val.elt,mode=util.modes.EXPR)+";}, "
@@ -189,5 +189,6 @@ table={
     "IfExp":expr_ifexp,
     "Starred":expr_starred,
     "GeneratorExp":expr_ListComp,
+    "NamedExpr":expr_NamedExpr,
     "DictComp":expr_DictComp,
 }
