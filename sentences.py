@@ -179,6 +179,9 @@ def sent_Yield(sentence:ast.Yield,f=""):
 def sent_nonlocal(sentence:ast.Nonlocal,f=""):
     return ""
 
+def sent_global(sentence:ast.Global,f=""):
+    return ""
+
 table={
     "Import":sent_import,
     "ImportFrom":sent_importfrom,
@@ -202,5 +205,6 @@ table={
     "Continue":lambda a,f="":f+"Continue\n",
     "YieldFrom":sent_YieldFrom,
     "Yield":sent_Yield,
-    "Nonlocal":sent_nonlocal
+    "Nonlocal":sent_nonlocal,
+    "Global":sent_global
 }
