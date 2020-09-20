@@ -24,21 +24,23 @@ def conv(filename:str):
     Returns:None
     """
     
-    src_path=os.path.split(os.path.abspath(filename))[0]
-    src_name=os.path.splitext(os.path.basename(filename))[0]
-    src_file=os.path.abspath(filename)
-    dest_file=os.path.join(src_path,"dest",src_name+".cpp")
-    print(os.path.relpath(src_file).ljust(25)+"|",os.path.relpath(dest_file).ljust(25+5)+"| ",end="",flush=True)
+    src_abs=os.path.abspath(filename)
+    src_rel=os.path.relpath(src_abs)
+    out_file=("dest/"+src_rel)[:-2]+"cpp"
+    src_file=src_abs
+    print(os.path.relpath(src_file).ljust(25)+"|",os.path.relpath(out_file).ljust(25+5)+"| ",end="",flush=True)
     
+
     if src_file in datamgr.dictmgr.get("internal","converted"):
         print("Already converted |")
     else:
         #Read  src(python)
-        os.chdir(os.path.dirname(src_file))
+        #os.chdir(os.path.dirname(src_file))
         with open(src_file,"r") as fp:
             src=ast.parse(fp.read(),src_file)
         #Write src(C++)
-        fp=open(dest_file,"w")
+        
+        fp=open(out_file,"w")
         fp.write("#include <base>\n")
         for sentence in src.body:
             fp.write(util.conv(sentence,mode=util.modes.SENT))
