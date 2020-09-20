@@ -40,12 +40,17 @@ def expr_call(val:ast.Call):
             return expr_call(val)
         else:
             return util.conv(val,mode=util.modes.EXPR)
+    def cat(a,b):
+        if a==None:
+            return b
+        else:
+            return a+"="+b
     tmp=conv(val.func)
     tmp+="("
     tmp+=", ".join([conv(arg) for arg in val.args])
     if len(val.keywords)!=0:
         tmp+=", "
-        tmp+=", ".join([keyword.arg+"="+conv(keyword.value) for keyword in val.keywords])
+        tmp+=", ".join([cat(keyword.arg,conv(keyword.value)) for keyword in val.keywords])
     tmp+=")"
     return tmp
 
