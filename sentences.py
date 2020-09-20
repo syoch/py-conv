@@ -162,5 +162,6 @@ table={
     "ClassDef":sent_classdef,
     "AugAssign":sent_augAssign,
     "Raise":sent_raise,
-    "Delete":sent_delete
+    "Delete":sent_delete,
+    "Break":lambda a,f="":f+"break\n"
 }
