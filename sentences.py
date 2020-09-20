@@ -163,7 +163,7 @@ def sent_try(sentence:ast.Try,f=""):
         s+=  util.walk_shallow(sentence.orelse,f)
     return s
 
-def sent_assert(sentence:ast.Assert):
+def sent_assert(sentence:ast.Assert,f=""):
     return f+"Core::assert("+util.conv(sentence.test,mode=util.modes.EXPR)+","+util.conv(sentence.msg,mode=util.modes.EXPR)+")"
 
 
