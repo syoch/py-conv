@@ -149,16 +149,16 @@ def sent_try(sentence:ast.Try,f=""):
     s=""
     s+=f+"try{"
     s+=  util.walk_shallow(sentence.body,f+"  ")
+    s+=  util.walk_shallow(sentence.finalbody,f+"  ")
     s+=f+"}"
     for handler in sentence.handlers:
         name=handler.name
         if not name:
             name="ex"
         s+=f+"catch("+util.conv(handler.type,mode=util.modes.EXPR)+" "+name+"){"
-        s+= util.walk_shallow(handler.body,f+"  ")
+        s+=  util.walk_shallow(handler.body,f+"  ")
+        s+=  util.walk_shallow(sentence.finalbody,f+"  ")
         s+=f+"}"
-    
-    if len(sentence.finalbody)!=0: raise NotImplementedError("Try.finalBody")
     if len(sentence.orelse)!=0:
         s+=  util.walk_shallow(sentence.orelse,f)
     return s
