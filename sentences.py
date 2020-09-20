@@ -176,6 +176,9 @@ def sent_YieldFrom(sentence:ast.YieldFrom,f=""):
 def sent_Yield(sentence:ast.Yield,f=""):
     return f+"yield"+util.conv(sentence.value,mode=util.modes.EXPR)+"\n"
 
+def sent_nonlocal(sentence:ast.Nonlocal,f=""):
+    return ""
+
 table={
     "Import":sent_import,
     "ImportFrom":sent_importfrom,
@@ -199,4 +202,5 @@ table={
     "Continue":lambda a,f="":f+"Continue\n",
     "YieldFrom":sent_YieldFrom,
     "Yield":sent_Yield,
+    "Nonlocal":sent_nonlocal
 }
