@@ -136,6 +136,9 @@ def expr_list(val:ast.List):
     tmp+="}"
     return tmp
 
+def expr_ifexp(val:ast.IfExp):
+    return util.conv(val.test,mode=util.modes.EXPR)+" ? "+util.conv(val.body,mode=util.modes.EXPR)+" : "+util.conv(val.orelse,mode=util.modes.EXPR)
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -156,5 +159,6 @@ table={
     "BoolOp":expr_BoolOp,
     "ListComp":expr_ListComp,
     "List":expr_list,
-    "Tuple":expr_list
+    "Tuple":expr_list,
+    "IfExp":expr_ifexp
 }
