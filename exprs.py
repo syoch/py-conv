@@ -139,6 +139,9 @@ def expr_list(val:ast.List):
 def expr_ifexp(val:ast.IfExp):
     return util.conv(val.test,mode=util.modes.EXPR)+" ? "+util.conv(val.body,mode=util.modes.EXPR)+" : "+util.conv(val.orelse,mode=util.modes.EXPR)
 
+def expr_starred(val:ast.Starred):
+    return "*"+util.conv(val.value,mode=util.modes.EXPR)
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -160,5 +163,6 @@ table={
     "ListComp":expr_ListComp,
     "List":expr_list,
     "Tuple":expr_list,
-    "IfExp":expr_ifexp
+    "IfExp":expr_ifexp,
+    "Starred":expr_starred
 }
