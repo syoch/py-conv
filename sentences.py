@@ -162,6 +162,11 @@ def sent_try(sentence:ast.Try,f=""):
     if len(sentence.orelse)!=0:
         s+=  util.walk_shallow(sentence.orelse,f)
     return s
+
+def sent_assert(sentence:ast.Assert):
+    return f+"Core::assert("+util.conv(sentence.test,mode=util.modes.EXPR)+","+util.conv(sentence.msg,mode=util.modes.EXPR)+")"
+
+
 table={
     "Import":sent_import,
     "ImportFrom":sent_importfrom,
@@ -180,5 +185,6 @@ table={
     "Raise":sent_raise,
     "Delete":sent_delete,
     "Break":lambda a,f="":f+"break\n",
-    "Try":sent_try
+    "Try":sent_try,
+    "Assert":sent_assert
 }
