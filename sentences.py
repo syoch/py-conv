@@ -1,7 +1,7 @@
 #Defines analyze of ast sentence functions
 
 import ast
-from exprs import expr_args, expr_call
+from exprs import expr_args, expr_call, expr_name
 import os
 import util
 import datamgr
@@ -145,7 +145,23 @@ def sent_raise(sentence:ast.Raise,f=""):
     
 def sent_delete(sentence:ast.Delete,f=""):
     return f+"delete" + ", ".join([util.conv(a,mode=util.modes.EXPR) for a in sentence.targets])+";\n"
-
+def sent_try(sentence:ast.Try,f=""):
+    s=""
+    s+=f+"try{"
+    s+=  util.walk_shallow(sentence.body,f+"  ")
+    s+=f+"}"
+    for handler in sentence.handlers:
+        name=handler.name
+        if not name:
+            name="ex"
+        s+=f+"catch("+util.conv(handler.type,mode=util.modes.EXPR)+" "+name+"){"
+        s+= util.walk_shallow(handler.body,f+"  ")
+        s+=f+"}"
+    
+    if len(sentence.finalbody)!=0: raise NotImplementedError("Try.finalBody")
+    if len(sentence.orelse)!=0:
+        s+=  util.walk_shallow(sentence.orelse,f)
+    return s
 table={
     "Import":sent_import,
     "ImportFrom":sent_importfrom,
@@ -163,5 +179,6 @@ table={
     "AugAssign":sent_augAssign,
     "Raise":sent_raise,
     "Delete":sent_delete,
-    "Break":lambda a,f="":f+"break\n"
+    "Break":lambda a,f="":f+"break\n",
+    "Try":sent_try
 }
