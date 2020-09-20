@@ -186,5 +186,6 @@ table={
     "Delete":sent_delete,
     "Break":lambda a,f="":f+"break\n",
     "Try":sent_try,
-    "Assert":sent_assert
+    "Assert":sent_assert,
+    "Continue":lambda a,f="":f+"Continue\n",
 }
