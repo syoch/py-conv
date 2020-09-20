@@ -23,5 +23,6 @@ table={
     "FloorDiv":"//",
     "LtE":"<=",
     "Is":"==",
-    "UAdd":"+"
+    "UAdd":"+",
+    "Lshift":"<<",
 }
