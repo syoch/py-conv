@@ -4,5 +4,6 @@ table={
     "int":lambda a:str(a),
     "bool":lambda a:"bool",
     "bytes":lambda a:a.decode(),
-    "float":lambda a:str(a)
+    "float":lambda a:str(a),
+    "ellipsis":lambda a:""
 }
