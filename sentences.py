@@ -50,8 +50,8 @@ def sent_assign(sentence:ast.Assign,f=""):
     value=util.conv(sentence.value,mode=util.modes.EXPR)
     for i,target in enumerate(sentence.targets):
         ret+=f
-        if util.conv(target,mode=util.modes.EXPR) not in datamgr.dictmgr.get("session","definedVariables"):
-            ret+="Any "
+        #if util.conv(target,mode=util.modes.EXPR) not in datamgr.dictmgr.get("session","definedVariables"):
+        ret+="Any "
         ret+=util.conv(target,mode=util.modes.EXPR)
         ret+=" = "+value
         if len(sentence.targets)!=1:
