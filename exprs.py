@@ -98,7 +98,7 @@ def expr_dict(val:ast.Dict):
     return tmp
 
 def expr_joinedstr(val:ast.JoinedStr):
-    return "+".join([util.conv(a,mode=util.modes.EXPR) for a in val.values])
+    return "".join([util.conv(a,mode=util.modes.EXPR) for a in val.values])
 
 def expr_formattedvalue(val:ast.FormattedValue):
     return util.conv(val.value,mode=util.modes.EXPR)
@@ -109,7 +109,7 @@ def expr_BoolOp(val:ast.BoolOp):
 
 
 def expr_ListComp(val:ast.ListComp):
-    tmp="Core::Proc_ListComp("
+    tmp="Core::ListComp("
     chars=", ".join([util.conv(gen.target,mode=util.modes.EXPR) for gen in val.generators])
     tmp+=f"[]({chars})"
     tmp+="{return "+util.conv(val.elt,mode=util.modes.EXPR)+";}, "
