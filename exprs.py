@@ -109,7 +109,7 @@ def expr_BoolOp(val:ast.BoolOp):
 
 
 def expr_ListComp(val:ast.ListComp):
-    tmp="Core::ListComp("
+    tmp="Core::Proc_ListComp("
     chars=", ".join([util.conv(gen.target,mode=util.modes.EXPR) for gen in val.generators])
     tmp+=f"[]({chars})"
     tmp+="{return "+util.conv(val.elt,mode=util.modes.EXPR)+";}, "
@@ -145,6 +145,26 @@ def expr_starred(val:ast.Starred):
 def expr_NamedExpr(val:ast.NamedExpr):
     return util.conv(val.target,mode=util.modes.EXPR)+"="+util.conv(val.value,mode=util.modes.EXPR)
 
+def expr_DictComp(val:ast.DictComp):
+    s=""
+    s+="Core::DictComp("
+    s+="{"
+    args=set()
+    for gen in val.generators:
+        s+="{"
+        s+=util.conv(gen.iter,mode=util.modes.EXPR)+","
+        s+="{"
+        s+=",".join([util.conv(ifb,mode=util.modes.EXPR) for ifb in gen.ifs])
+        s+="}"
+        args.add(util.conv(gen.target,mode=util.modes.EXPR))
+        s+="}"
+    s+="},"
+    args=",".join([f"Any {b}" for b in args])
+    s+=f"[]({args}){{{util.conv(val.key,mode=util.modes.EXPR)}}},"
+    s+=f"[]({args}){{{util.conv(val.value,mode=util.modes.EXPR)}}}"
+    s+=")"
+    return s
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -169,5 +189,5 @@ table={
     "IfExp":expr_ifexp,
     "Starred":expr_starred,
     "GeneratorExp":expr_ListComp,
-    "NamedExpr":expr_NamedExpr
+    "DictComp":expr_DictComp,
 }
