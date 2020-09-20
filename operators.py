@@ -12,5 +12,6 @@ table={
     "In":"in",
     "NotIn":"not in",
     "And":"and",
-    "USub":"-"
+    "USub":"-",
+    "BitAnd":"&"
 }
