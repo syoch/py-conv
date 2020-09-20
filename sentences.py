@@ -164,14 +164,17 @@ def sent_try(sentence:ast.Try,f=""):
     return s
 
 def sent_assert(sentence:ast.Assert,f=""):
-    return f+"Core::assert("+util.conv(sentence.test,mode=util.modes.EXPR)+","+util.conv(sentence.msg,mode=util.modes.EXPR)+")"
+    return f+"Core::assert("+util.conv(sentence.test,mode=util.modes.EXPR)+","+util.conv(sentence.msg,mode=util.modes.EXPR)+")\n"
 
 def sent_YieldFrom(sentence:ast.YieldFrom,f=""):
     s=""
     s+=f+"for(Any value:"+util.conv(sentence.value,mode=util.modes.EXPR)+"){"
     s+=f+"  yield value"
-    s+=f+"}"
+    s+=f+"}\n"
     return s
+
+def sent_Yield(sentence:ast.Yield,f=""):
+    return f+"yield"+util.conv(sentence.value,mode=util.modes.EXPR)+"\n"
 
 table={
     "Import":sent_import,
@@ -194,5 +197,6 @@ table={
     "Try":sent_try,
     "Assert":sent_assert,
     "Continue":lambda a,f="":f+"Continue\n",
-    "YieldFrom":sent_YieldFrom
+    "YieldFrom":sent_YieldFrom,
+    "Yield":sent_Yield,
 }
