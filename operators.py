@@ -14,5 +14,6 @@ table={
     "And":"and",
     "USub":"-",
     "BitAnd":"&",
-    "Lt":"<"
+    "Lt":"<",
+    "Gt":">"
 }
