@@ -24,5 +24,6 @@ table={
     "LtE":"<=",
     "Is":"==",
     "UAdd":"+",
-    "Lshift":"<<",
+    "LShift":"<<",
+    "RShift":">>"
 }
