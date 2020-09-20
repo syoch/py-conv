@@ -206,5 +206,6 @@ table={
     "YieldFrom":sent_YieldFrom,
     "Yield":sent_Yield,
     "Nonlocal":sent_nonlocal,
-    "Global":sent_global
+    "Global":sent_global,
+    "AsyncFunctionDef":sent_funcdef,
 }
