@@ -21,5 +21,6 @@ table={
     "BitOr":"|",
     "IsNot":"!=",
     "FloorDiv":"//",
-    "LtE":"<="
+    "LtE":"<=",
+    "Is":"=="
 }
