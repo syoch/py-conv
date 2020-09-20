@@ -19,5 +19,6 @@ table={
     "GtE":"<=",
     "Or":"or",
     "BitOr":"|",
-    "IsNot":"!="
+    "IsNot":"!=",
+    "FloorDiv":"//"
 }
