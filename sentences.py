@@ -5,7 +5,7 @@ from exprs import expr_args, expr_call, expr_name
 import os
 import util
 import datamgr
-from stdlibs import names as stdlibs
+import libnames
 
 def sent_import(sentence:ast.Import,f=""):
     tmp=""
@@ -16,10 +16,10 @@ def sent_import(sentence:ast.Import,f=""):
             if not os.path.abspath(name+".py") in datamgr.dictmgr.get("internal","converted"):
                 datamgr.queuemgr.put("srcs",os.path.abspath(name+".py"))
         else:
-            if name in stdlibs:
+            if name in libnames.names:
                 tmp+=f+"#include <"+name+".cpp"+">\n"
             else:
-                tmp+=f+"#include <"+name+">\n"
+                tmp+=f+"#include <"+libnames.fix(name)+">\n"
         if a.asname:
             tmp+=f+f"#define {a.asname} {name}\n"
     return tmp
@@ -31,10 +31,10 @@ def sent_importfrom(sentence:ast.ImportFrom,f=""):
         tmp+=f+"#include \""+name+".cpp"+"\"\n"
         datamgr.queuemgr.put("srcs",os.path.abspath(name+".py"))
     else:
-        if name in stdlibs:
+        if name in libnames.names:
             tmp+=f+"#include <"+name+".cpp"+">\n"
         else:
-            tmp+=f+"#include <"+name+">\n"
+            tmp+=f+"#include <"+libnames.fix(name)+">\n"
     for a in sentence.names:
         if a.asname:
             tmp+=f+f"#define {a.asname} {a.name}\n"
