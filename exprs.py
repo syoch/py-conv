@@ -169,6 +169,9 @@ def expr_set(val:ast.Set):
     vals=[util.conv(a,mode=util.modes.EXPR) for a in val.elts]
     return "["+",".join(vals)+"]"
 
+def expt_await(val:ast.Await):
+    return f"({util.conv(val.value,mode=util.modes.EXPR)}).await()"
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -195,5 +198,6 @@ table={
     "GeneratorExp":expr_ListComp,
     "NamedExpr":expr_NamedExpr,
     "DictComp":expr_DictComp,
-    "Set":expr_set
+    "Set":expr_set,
+    "Await":expt_await
 }
