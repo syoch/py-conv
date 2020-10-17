@@ -36,12 +36,8 @@ def _conv(filename:str):
         tmp=os.path.splitext(src_rel)[0]
     out_file=out+os.path.sep+tmp+".cpp"
     src_file=src_abs
-    print(src_rel.ljust(25)+"|",os.path.relpath(out_file).ljust(25+5)+"| ",end="",flush=True)
     
-
-    if src_file in datamgr.dictmgr.get("internal","converted"):
-        print("Already converted |")
-    else:
+    if src_file not in datamgr.dictmgr.get("internal","converted"):
         #Read  src(python)
         with open(src_file,"r") as fp:
             src=ast.parse(fp.read(),src_file)
@@ -52,8 +48,6 @@ def _conv(filename:str):
             fp.write(util.conv(sentence,mode=util.modes.SENT))
         fp.close()
         
-        print("done              |")
-    
     datamgr.dictmgr.get("internal","converted").add(src_file)
     
 def conv(filename:str):
