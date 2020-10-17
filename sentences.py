@@ -31,7 +31,10 @@ def sent_importfrom(sentence:ast.ImportFrom,f=""):
         tmp+=f+"#include \""+name+".cpp"+"\"\n"
         datamgr.queuemgr.put("srcs",os.path.abspath(name+".py"))
     else:
-        tmp+=f+"#include <"+name+">\n"
+        if name in stdlibs:
+            tmp+=f+"#include <"+name+".cpp"+">\n"
+        else:
+            tmp+=f+"#include <"+name+">\n"
     for a in sentence.names:
         if a.asname:
             tmp+=f+f"#define {a.asname} {a.name}\n"
