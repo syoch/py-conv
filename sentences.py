@@ -204,7 +204,7 @@ table={
     "While":sent_while,
     "If":sent_if,
     "With":sent_with,
-    "Expr":lambda a,f="":util.conv(a.value,f=f),
+    "Expr":lambda a,f="":util.conv(a.value,f=f)+";\n",
     "Call":lambda val,f="":f+expr_call(val)+";\n",
     "Pass":lambda a,f="": f+"pass\n",
     "ClassDef":sent_classdef,
