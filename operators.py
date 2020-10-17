@@ -28,5 +28,6 @@ table={
     "RShift":">>",
     "Pow":"**",
     "BitXor":"^",
-    "Invert":"~"
+    "Invert":"~",
+    "MatMult":"@"
 }
