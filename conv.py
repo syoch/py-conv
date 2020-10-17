@@ -73,10 +73,20 @@ def main():
         metavar="dir"
     )
     
+    group.add_argument(
+        "-f","--file",
+        help="Convert python script",
+        type=str
+    )
+
     if ns.directory:
         import glob
         for filename in glob.glob(ns.directory+"/*"):
             conv(filename)
+
+    if ns.file:
+        conv(ns.file)
+
 
 if __name__ == "__main__":
     main()
