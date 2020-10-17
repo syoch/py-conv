@@ -27,5 +27,5 @@ names = [
     "threading",        "timeit",          "token",       "tokenize",         "trace",           "traceback",
     "tracemalloc",      "tty",             "turtle",      "types",            "typing",          "uu",
     "uuid",             "warnings",        "wave",        "weakref",          "webbrowser",      "xdrlib",
-    "zipapp",           "zipfile",         "zipimport",   "sys"
+    "zipapp",           "zipfile",         "zipimport"
 ]
