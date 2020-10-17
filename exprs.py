@@ -172,6 +172,10 @@ def expr_set(val:ast.Set):
 def expt_await(val:ast.Await):
     return f"({util.conv(val.value,mode=util.modes.EXPR)}).await()"
 
+def expr_SetComp(val:ast.SetComp):
+    return f"Core::SetComp({util.conv(val.elt)})"
+
+
 table={
     "arguments":expr_args,
     "arg":expr_arg,
@@ -199,5 +203,6 @@ table={
     "NamedExpr":expr_NamedExpr,
     "DictComp":expr_DictComp,
     "Set":expr_set,
-    "Await":expt_await
+    "Await":expt_await,
+    "SetComp":expr_SetComp
 }
