@@ -11,7 +11,7 @@ def check():
     datamgr.dictmgr.create("internal")
     datamgr.dictmgr.set("internal","converted",set())
 
-def conv(filename:str):
+def _conv(filename:str):
     """
     Convert python to c++ source code
 
@@ -50,12 +50,16 @@ def conv(filename:str):
     
     datamgr.dictmgr.get("internal","converted").add(src_file)
     
+def conv(filename:str):
+    _conv(filename)
+    while not datamgr.queuemgr.empty("srcs"):
+        _conv(datamgr.queuemgr.get("srcs"))
+
+def main():
+    check()
 
 # +-----------------------+
 # |          Test         |
 # +-----------------------+
 if __name__ == "__main__":
-    check()
-    conv("conv.py")
-    while not datamgr.queuemgr.empty("srcs"):
-        conv(datamgr.queuemgr.get("srcs"))
+    main()
