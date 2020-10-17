@@ -31,12 +31,12 @@ def _conv(filename:str):
     src_abs=os.path.abspath(filename)
     src_rel=os.path.relpath(filename)
     if basemode:
-        tmp=os.path.basename(src_rel)
+        tmp=os.path.basename(src_rel)[:-3]
     else:
         tmp=os.path.splitext(src_rel)[0]
     out_file=out+os.path.sep+tmp+".cpp"
     src_file=src_abs
-    
+
     if src_file not in datamgr.dictmgr.get("internal","converted"):
         #Read  src(python)
         with open(src_file,"r") as fp:
@@ -47,7 +47,7 @@ def _conv(filename:str):
         for sentence in src.body:
             fp.write(util.conv(sentence,mode=util.modes.SENT))
         fp.close()
-        
+            
     datamgr.dictmgr.get("internal","converted").add(src_file)
     
 def conv(filename:str):
