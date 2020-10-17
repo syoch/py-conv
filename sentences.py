@@ -17,7 +17,7 @@ def sent_import(sentence:ast.Import,f=""):
             if not os.path.abspath(name+".py") in datamgr.dictmgr.get("internal","converted"):
                 datamgr.queuemgr.put("srcs",os.path.abspath(name+".py"))
         else:
-            if name in libnames.names:
+            if name.split("/")[0] in libnames.names:
                 tmp+=f+"#include <"+name+".cpp"+">\n"
             else:
                 tmp+=f+"#include <"+name+">\n"
@@ -33,7 +33,7 @@ def sent_importfrom(sentence:ast.ImportFrom,f=""):
         tmp+=f+"#include \""+name+".cpp"+"\"\n"
         datamgr.queuemgr.put("srcs",os.path.abspath(name+".py"))
     else:
-        if name in libnames.names:
+        if name.split("/")[0] in libnames.names:
             tmp+=f+"#include <"+name+".cpp"+">\n"
         else:
             tmp+=f+"#include <"+name+">\n"
