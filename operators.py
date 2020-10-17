@@ -26,5 +26,6 @@ table={
     "UAdd":"+",
     "LShift":"<<",
     "RShift":">>",
-    "Pow":"**"
+    "Pow":"**",
+    "BitXor":"^"
 }
