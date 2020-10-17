@@ -181,6 +181,14 @@ def sent_nonlocal(sentence:ast.Nonlocal,f=""):
 
 def sent_global(sentence:ast.Global,f=""):
     return ""
+    
+def sent_AnnAssign(sentence:ast.AnnAssign,f=""):
+    value=""
+    if sentence.value:
+        value="="+util.conv(sentence.value,mode=util.modes.EXPR)
+    annotation=util.conv(sentence.annotation,mode=util.modes.EXPR)
+    name=util.conv(sentence.target,mode=util.modes.EXPR)
+    return annotation+" "+name+value+";\n"
 
 table={
     "Import":sent_import,
@@ -208,4 +216,5 @@ table={
     "Nonlocal":sent_nonlocal,
     "Global":sent_global,
     "AsyncFunctionDef":sent_funcdef,
+    "AnnAssign":sent_AnnAssign
 }
