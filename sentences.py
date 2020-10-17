@@ -19,7 +19,7 @@ def sent_import(sentence:ast.Import,f=""):
             if name in libnames.names:
                 tmp+=f+"#include <"+name+".cpp"+">\n"
             else:
-                tmp+=f+"#include <"+libnames.fix(name)+">\n"
+                tmp+=f+"#include <"+name+">\n"
         if a.asname:
             tmp+=f+f"#define {a.asname} {name}\n"
     return tmp
@@ -34,7 +34,7 @@ def sent_importfrom(sentence:ast.ImportFrom,f=""):
         if name in libnames.names:
             tmp+=f+"#include <"+name+".cpp"+">\n"
         else:
-            tmp+=f+"#include <"+libnames.fix(name)+">\n"
+            tmp+=f+"#include <"+name+">\n"
     for a in sentence.names:
         if a.asname:
             tmp+=f+f"#define {a.asname} {a.name}\n"
