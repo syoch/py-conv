@@ -57,9 +57,26 @@ def conv(filename:str):
 
 def main():
     check()
+    parser=argparse.ArgumentParser(
+        description="Transcompile python source code into C++ source code"
+    )
 
-# +-----------------------+
-# |          Test         |
-# +-----------------------+
+    group=parser.add_mutually_exclusive_group(required=True)
+
+    group.add_argument(
+        "-d","--directory",
+        help="Convert directory",
+        nargs="?",
+        type=str,
+        default=None,
+        const="libs",
+        metavar="dir"
+    )
+    
+    if ns.directory:
+        import glob
+        for filename in glob.glob(ns.directory+"/*"):
+            conv(filename)
+
 if __name__ == "__main__":
     main()
