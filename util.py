@@ -18,14 +18,14 @@ def conv(raw,f="",mode:modes=modes.BOTH):
             return basetype.table[typename](raw)
         else:
             print("Unknown Expr Type "+typename)
-            print(datamgr.queuemgr.get("srcs"))
+            print(datamgr.queuemgr.getobj("srcs"))
             exit(0)
     elif mode==modes.SENT:
         if typename in sentences.table:
             return sentences.table[typename](raw,f=f)
         else:
             print("Unknown Sentence Type "+typename)
-            print(datamgr.queuemgr.get("srcs"))
+            print(datamgr.queuemgr.getobj("srcs"))
             exit(0)
     elif mode==modes.BOTH:
         if typename in sentences.table:
@@ -38,7 +38,7 @@ def conv(raw,f="",mode:modes=modes.BOTH):
             return operators.table[typename]
         else:
             print("Unknown Type "+typename)
-            print(datamgr.queuemgr.get("srcs"))
+            print(datamgr.queuemgr.getobj("srcs"))
             exit(0)
 
 def walk_shallow(obj,f=""):
