@@ -154,7 +154,7 @@ def sent_delete(sentence:ast.Delete,f=""):
     return f+"delete" + ", ".join([util.conv(a,mode=util.modes.EXPR) for a in sentence.targets])+";\n"
 def sent_try(sentence:ast.Try,f=""):
     s=""
-    s+=f+"try{"
+    s+=f+"try{\n"
     s+=  util.walk_shallow(sentence.body,f+"  ")
     s+=  util.walk_shallow(sentence.finalbody,f+"  ")
     s+=f+"}"
@@ -162,7 +162,7 @@ def sent_try(sentence:ast.Try,f=""):
         name=handler.name
         if not name:
             name="ex"
-        s+=f+"catch("+util.conv(handler.type,mode=util.modes.EXPR)+" "+name+"){"
+        s+=f+"catch("+util.conv(handler.type,mode=util.modes.EXPR)+" "+name+"){\n"
         s+=  util.walk_shallow(handler.body,f+"  ")
         s+=  util.walk_shallow(sentence.finalbody,f+"  ")
         s+=f+"}"
