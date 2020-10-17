@@ -11,6 +11,7 @@ def sent_import(sentence:ast.Import,f=""):
     tmp=""
     for a in sentence.names:
         name=a.name
+        name=name.replace(".","/")
         if os.path.exists(name+".py"):
             tmp+=f+"#include \""+name+".cpp"+"\"\n"
             if not os.path.abspath(name+".py") in datamgr.dictmgr.get("internal","converted"):
@@ -27,6 +28,7 @@ def sent_import(sentence:ast.Import,f=""):
 def sent_importfrom(sentence:ast.ImportFrom,f=""):
     tmp=""
     name=sentence.module
+    name=name.replace(".","/")
     if os.path.exists(name+".py"):
         tmp+=f+"#include \""+name+".cpp"+"\"\n"
         datamgr.queuemgr.put("srcs",os.path.abspath(name+".py"))
