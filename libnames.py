@@ -29,12 +29,3 @@ names = [
     "uuid",             "warnings",        "wave",        "weakref",          "webbrowser",      "xdrlib",
     "zipapp",           "zipfile",         "zipimport"
 ]
-table={
-    "_abc":"_py_abc.cpp",
-    "_weakref":"weakref.cpp"
-}
-def fix(name):
-    global table
-    if name in table:
-        return table[name]
-    return name
