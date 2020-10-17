@@ -76,6 +76,12 @@ class queuemgr: # namespace
         return queuemgr.table[name].popleft()
     
     @staticmethod
+    def getobj(name:str)->Any:
+        if name not in queuemgr.table:
+            raise Exception(f"{name} is not already defined")
+        return queuemgr.table[name]
+
+    @staticmethod
     def empty(name:str) -> Any:
         if name not in queuemgr.table:
             raise Exception(f"{name} is not already defined")
