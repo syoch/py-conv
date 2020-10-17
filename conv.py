@@ -43,11 +43,9 @@ def _conv(filename:str):
         print("Already converted |")
     else:
         #Read  src(python)
-        #os.chdir(os.path.dirname(src_file))
         with open(src_file,"r") as fp:
             src=ast.parse(fp.read(),src_file)
         #Write src(C++)
-        
         fp=open(out_file,"w")
         fp.write("#include <base>\n")
         for sentence in src.body:
