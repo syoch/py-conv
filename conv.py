@@ -101,7 +101,7 @@ def main():
         basemode=True
     if ns.directory:
         import glob
-        for filename in glob.glob(ns.directory+"/*"):
+        for filename in glob.glob(ns.directory+"/*.py"):
             conv(filename)
 
     if ns.file:
