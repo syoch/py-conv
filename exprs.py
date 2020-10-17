@@ -175,6 +175,8 @@ def expt_await(val:ast.Await):
 def expr_SetComp(val:ast.SetComp):
     return f"Core::SetComp({util.conv(val.elt)})"
 
+def expr_Yield(sentence:ast.Yield,f=""):
+    return f+"yield"+util.conv(sentence.value,mode=util.modes.EXPR)+"\n"
 
 table={
     "arguments":expr_args,
@@ -204,5 +206,6 @@ table={
     "DictComp":expr_DictComp,
     "Set":expr_set,
     "Await":expt_await,
-    "SetComp":expr_SetComp
+    "SetComp":expr_SetComp,
+    "Yield":expr_Yield
 }

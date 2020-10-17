@@ -173,15 +173,12 @@ def sent_YieldFrom(sentence:ast.YieldFrom,f=""):
     s+=f+"}\n"
     return s
 
-def sent_Yield(sentence:ast.Yield,f=""):
-    return f+"yield"+util.conv(sentence.value,mode=util.modes.EXPR)+"\n"
-
 def sent_nonlocal(sentence:ast.Nonlocal,f=""):
     return ""
 
 def sent_global(sentence:ast.Global,f=""):
     return ""
-    
+
 def sent_AnnAssign(sentence:ast.AnnAssign,f=""):
     value=""
     if sentence.value:
@@ -212,7 +209,6 @@ table={
     "Assert":sent_assert,
     "Continue":lambda a,f="":f+"Continue\n",
     "YieldFrom":sent_YieldFrom,
-    "Yield":sent_Yield,
     "Nonlocal":sent_nonlocal,
     "Global":sent_global,
     "AsyncFunctionDef":sent_funcdef,
