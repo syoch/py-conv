@@ -27,5 +27,6 @@ table={
     "LShift":"<<",
     "RShift":">>",
     "Pow":"**",
-    "BitXor":"^"
+    "BitXor":"^",
+    "Invert":"~"
 }
