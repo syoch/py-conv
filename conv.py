@@ -29,10 +29,14 @@ def _conv(filename:str):
     """
     
     src_abs=os.path.abspath(filename)
-    src_rel=os.path.relpath(src_abs)
-    out_file=("dest/"+src_rel)[:-2]+"cpp"
+    src_rel=os.path.relpath(filename)
+    if basemode:
+        tmp=os.path.basename(src_rel)
+    else:
+        tmp=os.path.splitext(src_rel)[0]
+    out_file=out+os.path.sep+tmp+".cpp"
     src_file=src_abs
-    print(os.path.relpath(src_file).ljust(25)+"|",os.path.relpath(out_file).ljust(25+5)+"| ",end="",flush=True)
+    print(src_rel.ljust(25)+"|",os.path.relpath(out_file).ljust(25+5)+"| ",end="",flush=True)
     
 
     if src_file in datamgr.dictmgr.get("internal","converted"):
