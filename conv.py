@@ -79,6 +79,15 @@ def main():
         type=str
     )
 
+    parser.add_argument(
+        "-o","--outputDir",
+        help="folder for output",
+        type=str,
+        default="dest"
+    )
+
+    out=ns.outputDir
+    if ns.basename:
     if ns.directory:
         import glob
         for filename in glob.glob(ns.directory+"/*"):
