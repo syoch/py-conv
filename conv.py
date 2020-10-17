@@ -2,6 +2,10 @@ import os
 import ast
 import util
 import datamgr
+import argparse
+
+out="dest/"
+basemode=False
 
 def check():
     #Check dest Folder
@@ -56,6 +60,8 @@ def conv(filename:str):
         _conv(datamgr.queuemgr.get("srcs"))
 
 def main():
+    global out,basemode
+
     check()
     parser=argparse.ArgumentParser(
         description="Transcompile python source code into C++ source code"
@@ -86,8 +92,17 @@ def main():
         default="dest"
     )
 
+    parser.add_argument(
+        "-b","--basename",
+        help="output filename contains basename only",
+        action="store_true"
+    )
+
+    ns=parser.parse_args()
+
     out=ns.outputDir
     if ns.basename:
+        basemode=True
     if ns.directory:
         import glob
         for filename in glob.glob(ns.directory+"/*"):
