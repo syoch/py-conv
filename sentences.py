@@ -60,7 +60,7 @@ def sent_assign(sentence:ast.Assign,f=""):
     for i,target in enumerate(sentence.targets):
         ret+=f
         #if util.conv(target,mode=util.modes.EXPR) not in datamgr.dictmgr.get("session","definedVariables"):
-        ret+="Any "
+        if type(target) != ast.Attribute: ret+="Any "
         ret+=util.conv(target,mode=util.modes.EXPR)
         ret+=" = "+value
         if len(sentence.targets)!=1:
@@ -95,20 +95,20 @@ def sent_if(sentence:ast.If,f=""):
 
     tmp=""
     #If Block
-    tmp+=f+f"if({util.conv(sentence.test,mode=util.modes.EXPR)}){{\n"
-    tmp+=util.walk_shallow(sentence.body,f=f+"  ")
-    tmp+=f+"}"
+    tmp+="if("+util.conv(sentence.test,mode=util.modes.EXPR)+"){\n"
+    tmp+=   util.walk_shallow(sentence.body,f=f+"  ")
+    tmp+="}"
 
     #Elif Blocks
     for block in blocks:
-        tmp+=f"else if({util.conv(block.test,mode=util.modes.EXPR)}){{\n"
-        tmp+=util.walk_shallow(block.body,f+"  ")
+        tmp+=f+"else if("+util.conv(block.test,mode=util.modes.EXPR)+"){\n"
+        tmp+=     util.walk_shallow(block.body,f+"  ")
         tmp+=f+"}"
 
     #Else Block
     if len(elseblock)!=0:
-        tmp+=f"else{{\n"
-        tmp+=util.walk_shallow(elseblock,f+"  ")
+        tmp+=f+"else{\n"
+        tmp+=     util.walk_shallow(elseblock,f+"  ")
         tmp+=f+"}"
     return tmp+"\n"
 
